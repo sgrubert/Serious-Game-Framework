@@ -21,7 +21,7 @@ var TUTORIALSDATA;
 
 //var INTRO = introJs();
 var TUTORIAL = false;
-var TUTORIALSTARTED = false;     
+var TUTORIALSTARTED = false;
 
 var NEXTLEVELS = [];
 var LEVELSDONE = [];
@@ -1162,7 +1162,7 @@ $(document).ready(function(){
 							// ToDo: no timeOut, but show Show Me Button!
 							// timeoutID = window.setTimeout(function(){showCorrectSolution(correct)}, 2000);
 						}
-						
+
 						// Check if all levels completed
 						if (!NEXTLEVELS.length) {
 							$('#leveldone').fadeIn();
@@ -1176,29 +1176,33 @@ $(document).ready(function(){
 								});
 							}
 						}
-						
+
 						// next level should be started with a button!
 						// user input should be displayed with marked what was right and what wrong, then the correct solution
-						
-						
+
 						setGalleryWidth();
-						
+
 						if (TUTORIAL) {
-							var timer = window.setTimeout(function () { window.history.back() }, 3000);
+							var assertion = ["http://monet.informatik.rwth-aachen.de/Serious-Game-Framework/data/badges/assertions/test-assertion.json"]
+							OpenBadges.issue(assertion, function(errors, successes) {
+								console.log(errors);
+								console.log(successes);
+							});
+
+							var timer = window.setTimeout(function () { window.history.back() }, 5000);
 						}
 					} else {
 						//alert("Structure nicht OK");
 					}
 				}
-				
+
 			} else {
 				//$('#button-showme').fadeOut();
 				$('#wrapper-showme').fadeOut();
 			}
 		}
 	}
-	
-	
+
 	function showCorrectSolution(correct) {
 		var l = getCurrentLevel();
 		if (l > -1) {
@@ -1218,7 +1222,7 @@ $(document).ready(function(){
 				}
 			}
 		}
-		
+
 		if (!correct) {
 			$('#wrapper-next').fadeIn();
 			$('#wrapper-next').click(function() {
@@ -1227,18 +1231,18 @@ $(document).ready(function(){
 		}
 		setGalleryWidth();
 	}
-	
+
 	function showMe() {
 		//alert("function called");
 		$('#wrapper-showme').fadeOut();
 		var l = CURRENTLEVEL;
 		var selected = [-1,-1,-1,-1];
-				
+
 		selected[0] = $("img", slot0).attr('piece-id');
 		selected[1] = $("img", slot1).attr('piece-id');
 		selected[2] = $("img", slot2).attr('piece-id');
 		selected[3] = $("img", slot3).attr('piece-id');
-		
+
 		if (l > -1) {
 			//alert("level > -1");
 			SHOWME = true;
