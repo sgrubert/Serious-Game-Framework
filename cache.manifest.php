@@ -16,7 +16,7 @@
   echo '# Versionhash: ' . md5($sVersionHash);
 
   function in_excluded_folder($fileName) {
-    $excluded_folders = array('.git');
+    $excluded_folders = array('.git', 'data/badges/');
 
     foreach($excluded_folders as $excluded_folder) {
       if(strpos(dirname($fileName), $excluded_folder))
@@ -27,7 +27,7 @@
   function use_offline($oFile) {
     $aIgnoreFiles = array("cache_manifest.php");
 
-    if($oFile->isFile() 
+    if($oFile->isFile()
     && !in_array($oFile->getFilename(), $aIgnoreFiles)
     && !in_excluded_folder($oFile)
     && substr($oFile->getFilename(), 0, 1) != ".") {
