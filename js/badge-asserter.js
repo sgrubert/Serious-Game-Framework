@@ -19,7 +19,7 @@ function BadgeAsserter () {
     this.identity = this.user_info.email;
     this.badge_host_path = this.host + this.badges_path + this.game_name + "/" + this.badge_name + "-badge.json";
 
-    // Some debugging information, choose at one needs
+    // Some debugging information, choose at own needs
     console.log(this.host);
     console.log(this.badges_path);
     console.log(this.assertions_path);
