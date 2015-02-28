@@ -29,6 +29,8 @@ var CURRENTLEVEL = -1;
 var SELECTEDITEMS = [];
 var GAMESTATE = "leveldone";
 
+var badge_asserter = new BadgeAsserter();
+
 // AJAX Requests only when Client is online
 //if (navigator.onLine) {
 //	var ajaxerror = false;
@@ -1048,15 +1050,14 @@ $(document).ready(function(){
 					if (LEVELDATA[l].elearning) {
 						$('#elearning').append('<a href="' + LEVELDATA[l].elearning + '" target="_blank">E-Learning Link</a>');
 					}
-					
+
 					GAMESTATE = "leveldone";
-					
+
 					$('#wrapper-level-tutorial').fadeOut();
-					
-					
+
 					var levelIndex = $.inArray(l,NEXTLEVELS);
 					NEXTLEVELS.splice(levelIndex, 1);
-					
+
 					// Check if all levels completed
 					if (!NEXTLEVELS.length) {
 						$('#leveldone').fadeIn();
@@ -1164,11 +1165,20 @@ $(document).ready(function(){
 						}
 
 						// Check if all levels completed
-						if (!NEXTLEVELS.length) {
+						if (!NEXTLEVELS.length)
+						{
 							$('#leveldone').fadeIn();
 							$('#leveldone').empty().append('All levels done.');
 							$('#wrapper-back-main').fadeIn();
-						} else {
+
+							// here all levels have been completed -> award badge of this game
+							// TODO MARKO use oidc_userinfo
+							var game_name = GAMESDATA[GAMEID].name.toLowerCase();
+							console.log(game_name);
+							this.badge_asserter.assertBadge(game_name, {name: "Marko Kajzer", email: "marko.kajzer@hotmail.de"}, "");
+						}
+						else
+						{
 							if (correct) {
 								$('#wrapper-next').fadeIn();
 								$('#wrapper-next').click(function() {
@@ -1183,12 +1193,6 @@ $(document).ready(function(){
 						setGalleryWidth();
 
 						if (TUTORIAL) {
-							var assertion = ["http://monet.informatik.rwth-aachen.de/Serious-Game-Framework/data/badges/assertions/test-assertion.json"]
-							OpenBadges.issue(assertion, function(errors, successes) {
-								console.log(errors);
-								console.log(successes);
-							});
-
 							var timer = window.setTimeout(function () { window.history.back() }, 5000);
 						}
 					} else {
