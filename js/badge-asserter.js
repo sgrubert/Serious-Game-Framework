@@ -20,17 +20,17 @@ function BadgeAsserter () {
     this.badge_host_path = this.host + this.badges_path + this.game_name + "/" + this.badge_name + "-badge.json";
 
     // Some debugging information, choose at own needs
-    console.log(this.host);
-    console.log(this.badges_path);
-    console.log(this.assertions_path);
-    console.log(this.game_name);
-    console.log(this.user_info);
-    console.log(this.badge_name);
-    console.log(this.uid);
-    console.log(this.assertion_file_name);
-    console.log(this.assertion_host_path);
-    console.log(this.identity);
-    console.log(this.badge_host_path);
+    // console.log(this.host);
+    // console.log(this.badges_path);
+    // console.log(this.assertions_path);
+    // console.log(this.game_name);
+    // console.log(this.user_info);
+    // console.log(this.badge_name);
+    // console.log(this.uid);
+    // console.log(this.assertion_file_name);
+    // console.log(this.assertion_host_path);
+    // console.log(this.identity);
+    // console.log(this.badge_host_path);
 
     // Check if assertion file already exists
     var request = $.ajax({
