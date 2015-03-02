@@ -87,11 +87,12 @@ function BadgeAsserter () {
   this.issueBadge = function (assertion_host_path, file_path) {
     // Issue the Badge
     OpenBadges.issue(assertion_host_path, function(errors, successes) {
+      console.log(errors);
+      console.log(successes);
+
       // if there was an error, delete the assertions file
       // if error was that badge already existed, no action is taken
       if(errors !== [] && errors[0].reason !== 'EXISTS') {
-        console.log(errors);
-
         // prepare params for PHP BadgeAsserter
         var params = "action=delete";
             params += "&path=" + file_path;
