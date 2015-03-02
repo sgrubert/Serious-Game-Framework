@@ -1172,10 +1172,9 @@ $(document).ready(function(){
 							$('#wrapper-back-main').fadeIn();
 
 							// here all levels have been completed -> award badge of this game
-							// TODO MARKO use oidc_userinfo
 							var game_name = GAMESDATA[GAMEID].name.toLowerCase();
 							console.log(game_name);
-							this.badge_asserter.assertBadge(game_name, {name: "Marko Kajzer", email: "marko.kajzer@hotmail.de"}, "");
+							this.badge_asserter.assertBadge(game_name, oidc_userinfo, "");
 						}
 						else
 						{
