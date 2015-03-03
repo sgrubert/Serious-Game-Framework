@@ -1345,8 +1345,8 @@ showProfile = function(oidc_userinfo) {
 	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
 
 	// TODO MARKO Enter real data here
-	$('div#user_name').text("oidc_userinfo.preferred_username");
-	$('div#user_real_name').text("oidc_userinfo.name");
-	$('div#user_email').text("oidc_userinfo.email");
-	$('div#user_phone').text("oidc_userinfo.phone_number");
+	$('div#user_name').text(oidc_userinfo.preferred_username);
+	$('div#user_real_name').text(oidc_userinfo.name);
+	$('div#user_email').text(oidc_userinfo.email);
+	$('div#user_phone').text(oidc_userinfo.phone_number);
 }
