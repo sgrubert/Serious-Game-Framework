@@ -124,24 +124,24 @@ var badge_asserter = new BadgeAsserter();
 //});
 
 // When DOM is loaded do the following
-$(document).ready(function(){
+$(document).ready(function() {
 	setGalleryHeight();
-	
+
 	$(window).resize(function() {
 		setGalleryHeight();
 	});
-	
+
 	if (!GOTDATA) {
 		// Clean up the game board and delete everything
 		$("#bodywrapper").remove();
 	}
-	
+
 	// Hide the areas for level verification
 	//$('#button-showme').hide();
 	//$('#button-next').hide();
 	//$('.level-verification').hide();
 	//$('#elearning').hide();
-	
+
 	// Global variables for the galleries and the slots
 	var GALLERIES = $(".gallery")
 		GALLERY0 = $("#gallery0"),
@@ -157,32 +157,31 @@ $(document).ready(function(){
 		SLOT2 = $("#slot2"),
 		SLOT3 = $("#slot3");
 		// idea: GALLERY = [$("gallery0"),...]
-	
-	
+
+
 	fillGamesList(GAMESDATA);
-	
+
 	$('.gamelink').click(function(){
 		var gameID = $(this).attr('game-id');
 		GAMEID = parseInt(gameID);
 		loadGame(GAMEID);
 	});
-	
+
 	$('.options-button').click(function(){
 		selectCurrentOptions();
 	});
-	
+
 	$('#wrapper-showme').click(function(){
 		showMe();
 	});
-	
+
 	$('#wrapper-level-tutorial').click(function(){
 		//if (DIFFICULTY == 3) {
 		//	reverseLevel();
 		//}
 		startTutorial();
 	});
-	
-	
+
 	$('#button-down-gallery0').bind('mousedown mouseup touchstart touchend', function(event){
 		if ((event.type == 'mousedown') || (event.type == 'touchstart')){
 			$('#gallery0 ul').animate({"scrollTop": "+=2000px"}, 3000, 'linear');
@@ -198,7 +197,7 @@ $(document).ready(function(){
 			$('#gallery0 ul').stop();
 		}
 	});
-	
+
 	$('#button-down-gallery2').bind('mousedown mouseup touchstart touchend', function(event){
 		if ((event.type == 'mousedown') || (event.type == 'touchstart')){
 			$('#gallery2 ul').animate({"scrollTop": "+=2000px"}, 3000, 'linear');
@@ -214,7 +213,7 @@ $(document).ready(function(){
 			$('#gallery2 ul').stop();
 		}
 	});
-	
+
 	$('#button-right-gallery1').bind('mousedown mouseup touchstart touchend', function(event){
 		if ((event.type == 'mousedown') || (event.type == 'touchstart')){
 			$('#ulwrap-gallery1').animate({"scrollLeft": "+=2000px"}, 3000, 'linear');
@@ -230,7 +229,7 @@ $(document).ready(function(){
 			$('#ulwrap-gallery1').stop();
 		}
 	});
-	
+
 	$('#button-right-gallery3').bind('mousedown mouseup touchstart touchend', function(event){
 		if ((event.type == 'mousedown') || (event.type == 'touchstart')){
 			$('#ulwrap-gallery3').animate({"scrollLeft": "+=2000px"}, 3000, 'linear');
@@ -311,13 +310,13 @@ $(document).ready(function(){
 			// data: gameData
 			//alert(i + " - " + data.name);
 			//var game = $('<a class="ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-right ui-btn-up-c" game-id="' + i + '" data-transition="slide" data-iconpos="right" data-icon="arrow-r" data-role="button" href="#game" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c">' + data.name + '</a>');
-			
+
 			var game = $('<li><a href="#game" game-id="' + i + '" class="gamelink"><h3>' + data.name + '</h3><p>' + data.description + '</p></a></li>');
 			$('.gameslist').append(game);
 		});
 		$('.gameslist').listview('refresh');
 	}
-	
+
 	function loadGame(gameID) {
 		if (gameID > -1) {
 			$('#wrapper-level-tutorial').fadeOut();
@@ -328,9 +327,9 @@ $(document).ready(function(){
 			$('#elearning').fadeOut();
 			$('#leveldone').fadeOut();
 			$('#levelcontrol').fadeOut();
-			
+
 			$('.gametitle').empty().append(GAMESDATA[gameID].name);
-			
+
 			// set the gallery and slot titles if available
 			for (var i=0; i < 4; i++) {
 				if (GAMESDATA[gameID].slotnames[i]) {
@@ -342,13 +341,13 @@ $(document).ready(function(){
 				}
 			}
 			clearGalleries();
-			initializeLevelState()
+			initializeLevelState();
 			loadGaleries(gameID);
 			initializeDragDrop();
-			
+
 			clearGameboard();
 			nextLevel();
-			
+
 			TUTORIAL = false;
 			addTutorialTexts();
 			// Show the tutorial, if the game is marked as tutorial
@@ -359,7 +358,7 @@ $(document).ready(function(){
 				$('#wrapper-level-tutorial').fadeOut();
 			}
 			var timer = window.setTimeout(function () { document.title = GAMESDATA[gameID].name }, 500);
-			
+
 		}
 	}
 	
@@ -1171,10 +1170,11 @@ $(document).ready(function(){
 							$('#leveldone').empty().append('All levels done.');
 							$('#wrapper-back-main').fadeIn();
 
+							// MARKO
 							// here all levels have been completed -> award badge of this game
 							var game_name = GAMESDATA[GAMEID].name.toLowerCase();
 							console.log(game_name);
-							this.badge_asserter.assertBadge(game_name, oidc_userinfo, "");
+							this.badge_asserter.assertBadge(game_name, {name: "Marko Kajzer", email: "marko.kajzer@hotmail.de"}, "");
 						}
 						else
 						{
@@ -1294,7 +1294,7 @@ $(document).ready(function(){
 		}
 	}
 	
-	/** 
+	/**
 	  * Returns true if all slots are filled.
 	  * NOT REALLY NEEDED ANYMORE
 	  */
@@ -1339,5 +1339,14 @@ $(document).ready(function(){
 			}
 		}
 	}
-
 });
+
+showProfile = function(oidc_userinfo) {
+	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
+
+	// TODO MARKO Enter real data here
+	$('div#user_name').text("oidc_userinfo.preferred_username");
+	$('div#user_real_name').text("oidc_userinfo.name");
+	$('div#user_email').text("oidc_userinfo.email");
+	$('div#user_phone').text("oidc_userinfo.phone_number");
+}

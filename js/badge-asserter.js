@@ -8,6 +8,13 @@ function BadgeAsserter () {
     this.user_info = oidc_userinfo;
     this.badge_name = badge_name || game_name;
 
+    // check if user is logged in
+    if(this.user_info) {}
+    else {
+      console.log("User not logged in. No action!");
+      return;
+    }
+
     // determine uid, which is: (game_name)-(badge-name)-(user.firstname)-(user.lastname)
     // will also be used as the file_name with a .json ending
     // EXAMPLES: tutorial-tutorial-marko-kajzer(.json) | other-10-correct-marko-kajzer(.json)

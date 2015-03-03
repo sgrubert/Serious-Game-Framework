@@ -1,0 +1,30 @@
+div#user-info {
+  width: 840px;
+  margin: auto;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+}
+
+div#user_img, div#profile_tags, div#profile_info {
+  display: inline-block;
+}
+
+div#profile_tags, div#profile_info {
+  vertical-align: top;
+  padding: 35px;
+  text-align: left;
+}
+
+div#user_img {
+  margin: 5px;
+}
+
+div#profile_tags {
+  margin-left: 40px;
+}
+
+div#profile_info {
+  padding-left: 20px;
+}
+
