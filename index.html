@@ -67,9 +67,9 @@
 	<script type="text/javascript" src="./js/jsrsasign/x509-1.1.js"></script>
 	<script type="text/javascript" src="./js/jsrsasign/crypto-1.1.js"></script>
 
-	<!-- import libraries for OpenBadges -->
+	<!-- import libraries for OpenBadges and Gleaner database -->
 	<script type="text/javascript" src="https://backpack.openbadges.org/issuer.js"></script>
-	<script type="text/javascript" src="js/badge-asserter.js"></script>
+	<script type="text/javascript" src="lib/badge-asserter.js"></script>
 
 	<script src="data/games.json"></script>
 	<script src="data/connections.json"></script>
@@ -346,7 +346,8 @@
 	    } else {
 	      // if sign in was not successful, log the cause of the error on the console
 	      console.log(result);
-				alert('Please log in with the button on the top left, so we can track your progress!');
+	      // TODO MARKO
+				// alert('Please log in with the button on the top left, so we can track your progress!');
 	    }
 		}
 	</script>

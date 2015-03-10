@@ -1344,7 +1344,11 @@ $(document).ready(function() {
 showProfile = function(oidc_userinfo) {
 	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
 
-	// TODO MARKO Enter real data here
+	// var xhr = new XMLHttpRequest();
+	// xhr.open('post', 'http://localhost:4000/api/c/collect/start/54ec75edf8f3ec75fd6ea591xz1oxff0rouvj9k9', true);
+	// xhr.setRequestHeader("Authorization", "anonymous");
+	// xhr.send();
+
 	$('div#user_name').text(oidc_userinfo.preferred_username);
 	$('div#user_real_name').text(oidc_userinfo.name);
 	$('div#user_email').text(oidc_userinfo.email);
