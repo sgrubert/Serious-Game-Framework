@@ -1170,10 +1170,10 @@ $(document).ready(function() {
 							$('#leveldone').empty().append('All levels done.');
 							$('#wrapper-back-main').fadeIn();
 
-							// MARKO
+							// TODO MARKO
 							// here all levels have been completed -> award badge of this game
 							var game_name = GAMESDATA[GAMEID].name.toLowerCase();
-							console.log(game_name);
+							// console.log(game_name);
 							this.badge_asserter.assertBadge(game_name, {name: "Marko Kajzer", email: "marko.kajzer@hotmail.de"}, "");
 						}
 						else
@@ -1341,14 +1341,33 @@ $(document).ready(function() {
 	}
 });
 
-showProfile = function(oidc_userinfo) {
-	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
-
+startTracking = function() {
 	// var xhr = new XMLHttpRequest();
 	// xhr.open('post', 'http://localhost:3000/collect/start/54ec75edf8f3ec75fd6ea591xz1oxff0rouvj9k9', true);
 	// xhr.setRequestHeader("Authorization", "a:");
 	// xhr.setRequestHeader("Email", oidc_userinfo.email);
 	// xhr.send();
+}
+
+showProfile = function() {
+	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
+
+	$.ajax({
+	  url: "http://localhost:3000/collect/badges", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+        'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+    },
+    success: function(result) {
+    	for(var i = 0; i < result.earnedBadges.length; i++) {
+    		var badge = $('<img class="badge-img" src="data/badges/' + result.earnedBadges[i] + '-badge.png">');
+    		$('div#badges-container').append(badge);
+    	}
+    },
+    error: function(error) {
+    	console.log("Can't get badges. Server down?");
+    }
+	});
 
 	$('div#user_name').text(oidc_userinfo.preferred_username);
 	$('div#user_real_name').text(oidc_userinfo.name);
