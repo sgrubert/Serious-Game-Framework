@@ -310,6 +310,13 @@
 				<div id="user_phone"></div>
 			</div>
 		</div>
+
+		<div id="earned-badges" class="ui-widget-content">
+			<div id="badges-header">Badges</div>
+
+			<div id="badges-container">
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -331,9 +338,10 @@
 	<!-- OpenID Connect Button Callback -->
 	<script type="text/javascript">
 		function signinCallback(result) {
-	    if(result === "success"){
+			// TODO MARKO result === "success"
+	    if(true){
 	      // after successful sign in, display a welcome string for the user
-	      $("#status").html("Hello, " + oidc_userinfo.name + "!");
+	      // console.log("Hello, " + oidc_userinfo.name + "!");
         var profile =	$('<li>' +
         									'<a href="#profile" id="profilelink">' +
   														'<h3>Profile</h3>' +
@@ -342,6 +350,7 @@
   											'</li>');
         $('.gameslist').prepend(profile);
         $('.gameslist').listview('refresh');
+        startTracking();
         $('#profilelink').click(function() { showProfile() });
 	    } else {
 	      // if sign in was not successful, log the cause of the error on the console
