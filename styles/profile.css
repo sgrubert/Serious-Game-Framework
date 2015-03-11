@@ -28,3 +28,23 @@ div#profile_info {
   padding-left: 20px;
 }
 
+/* BadgesContainer */
+div#earned-badges {
+  width: 840px;
+  margin: auto;
+  margin-top: 25px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+div#badges-header {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 20px;
+}
+
+img.badge-img {
+  width: 200px;
+  margin: 0px 5px;
+  margin-bottom: -20px;
+}
