@@ -1342,11 +1342,22 @@ $(document).ready(function() {
 });
 
 startTracking = function() {
-	// var xhr = new XMLHttpRequest();
-	// xhr.open('post', 'http://localhost:3000/collect/start/54ec75edf8f3ec75fd6ea591xz1oxff0rouvj9k9', true);
-	// xhr.setRequestHeader("Authorization", "a:");
-	// xhr.setRequestHeader("Email", oidc_userinfo.email);
-	// xhr.send();
+	$.ajax({
+		type: 'POST',
+	  url: "http://localhost:3000/collect/start/54f7502966468383acbec8319dnoib1qqzq1714i", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+	  	'Authorization': 'a:',
+      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+    },
+    success: function(result) {
+    	console.log("Login registered!");
+    },
+    error: function(error) {
+    	console.log(error);
+    	console.log("Cannot start tracking. Server down?");
+    }
+	});
 }
 
 showProfile = function() {
@@ -1356,7 +1367,7 @@ showProfile = function() {
 	  url: "http://localhost:3000/collect/badges", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
-        'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
     },
     success: function(result) {
     	for(var i = 0; i < result.earnedBadges.length; i++) {
@@ -1364,7 +1375,7 @@ showProfile = function() {
     		$('div#badges-container').append(badge);
     	}
     },
-    error: function(error) {
+    error: function() {
     	console.log("Can't get badges. Server down?");
     }
 	});
