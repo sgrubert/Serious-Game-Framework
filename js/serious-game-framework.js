@@ -30,6 +30,7 @@ var SELECTEDITEMS = [];
 var GAMESTATE = "leveldone";
 
 var badge_asserter = new BadgeAsserter();
+var gleaner_tracker = new GleanerTracker();
 
 // AJAX Requests only when Client is online
 //if (navigator.onLine) {
@@ -165,14 +166,32 @@ $(document).ready(function() {
 		var gameID = $(this).attr('game-id');
 		GAMEID = parseInt(gameID);
 		loadGame(GAMEID);
+
+		// TODO MARKO Send trace for starting a game
+		// TODO MARKO add real oidc_userinfo
+		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "game_start",
+															{gameID: GAMEID});
 	});
 
 	$('.options-button').click(function(){
 		selectCurrentOptions();
 	});
 
+	$('#elearning').click(function() {
+		// TODO MARKO Send trace for clicking an eLearning link
+		// TODO MARKO add real oidc_userinfo
+		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "elearning",
+															{gameID: GAMEID, levelID: CURRENTLEVEL});
+	});
+
 	$('#wrapper-showme').click(function(){
 		showMe();
+
+		// TODO MARKO Send trace for using the show_me button
+		// TODO MARKO only send if not already logged incorrect answer
+		// TODO MARKO add real oidc_userinfo
+		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
+															{gameID: GAMEID, levelID: CURRENTLEVEL, result: "show_me"});
 	});
 
 	$('#wrapper-level-tutorial').click(function(){
@@ -1104,13 +1123,13 @@ $(document).ready(function() {
 					
 					if (levelStructure) {
 						//alert("Structure OK");
-						if ( 	((LEVELDATA[l].pieces[0] == p[0]) || (LEVELDATA[l].pieces[0] == -1)) 
+						if ( 	((LEVELDATA[l].pieces[0] == p[0]) || (LEVELDATA[l].pieces[0] == -1))
 							&& 	((LEVELDATA[l].pieces[1] == p[1]) || (LEVELDATA[l].pieces[1] == -1))
 							&& 	((LEVELDATA[l].pieces[2] == p[2]) || (LEVELDATA[l].pieces[2] == -1))
 							&& 	((LEVELDATA[l].pieces[3] == p[3]) || (LEVELDATA[l].pieces[3] == -1)) ) {
 							correct = true;
 						}
-						
+
 						GAMESTATE = "leveldone";
 						$('#wrapper-level-tutorial').fadeOut();
 						$('#wrapper-showme').fadeOut();
@@ -1120,17 +1139,30 @@ $(document).ready(function() {
 						if (LEVELDATA[l].elearning) {
 							$('#elearning').append('<a href="' + LEVELDATA[l].elearning + '" target="_blank">E-Learning Link</a>');
 						}
-						
+
 						if (!correct) {
 							logLevel(l, "wrong");
 							// Tell the user that the solution is wrong
 							$('#level-verification-wrong').show();
+
+							// TODO MARKO add sending traces with result = "wrong", do not track in Tutorial
+							// TODO MARKO replace with real user_info
+							if(!TUTORIAL) {
+								gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
+																					{gameID: GAMEID, levelID: CURRENTLEVEL, result: "wrong"});
+							}
 						} else {
 							logLevel(l, "correct");
 							// Tell the user that the solution is correct
 							$('#level-verification-correct').show();
+
+							// TODO MARKO add sending traces with result = "correct", do not track in Tutorial
+							// TODO MARKO replace with real user_info
+							if(!TUTORIAL) {
+								gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
+																				{gameID: GAMEID, levelID: CURRENTLEVEL, result: "correct"});
+							}
 						}
-						
 						for (var i = 0; i <= 3; i++) {
 							var slot = $('#slot' + i);
 							if (LEVELDATA[l].pieces[i] > -1) {
@@ -1170,10 +1202,10 @@ $(document).ready(function() {
 							$('#leveldone').empty().append('All levels done.');
 							$('#wrapper-back-main').fadeIn();
 
-							// TODO MARKO
 							// here all levels have been completed -> award badge of this game
 							var game_name = GAMESDATA[GAMEID].name.toLowerCase();
 							// console.log(game_name);
+							// TODO MARKO add real oidc_userinfo
 							this.badge_asserter.assertBadge(game_name, {name: "Marko Kajzer", email: "marko.kajzer@hotmail.de"}, "");
 						}
 						else
@@ -1342,22 +1374,13 @@ $(document).ready(function() {
 });
 
 startTracking = function() {
-	$.ajax({
-		type: 'POST',
-	  url: "http://localhost:3000/collect/start/54f7502966468383acbec8319dnoib1qqzq1714i", // TODO MARKO add real url
-	  dataType: "json",
-	  headers: {
-	  	'Authorization': 'a:',
-      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
-    },
-    success: function(result) {
-    	console.log("Login registered!");
-    },
-    error: function(error) {
-    	console.log(error);
-    	console.log("Cannot start tracking. Server down?");
-    }
-	});
+	// Send request to initialize first gameplay
+	// TODO MARKO add real_oidc_userinfo
+	gleaner_tracker.startTracking({email: "marko.kajzer@hotmail.de"});
+
+	// TODO MARKO Send trace for starting a session
+	// TODO MARKO add real oidc_userinfo
+	gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "login");
 }
 
 showProfile = function() {

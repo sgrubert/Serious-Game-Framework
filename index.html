@@ -70,6 +70,7 @@
 	<!-- import libraries for OpenBadges and Gleaner database -->
 	<script type="text/javascript" src="https://backpack.openbadges.org/issuer.js"></script>
 	<script type="text/javascript" src="lib/badge-asserter.js"></script>
+	<script type="text/javascript" src="lib/gleaner-tracker.js"></script>
 
 	<script src="data/games.json"></script>
 	<script src="data/connections.json"></script>
@@ -340,8 +341,8 @@
 	<!-- OpenID Connect Button Callback -->
 	<script type="text/javascript">
 		function signinCallback(result) {
-			// TODO MARKO result === "success"
-	    if(true){
+			// TODO MARKO
+	    if(result === "success"){
 	      // after successful sign in, display a welcome string for the user
 	      // TODO MARKO console.log("Hello, " + oidc_userinfo.name + "!");
         var profile =	$('<li>' +
@@ -352,8 +353,8 @@
   											'</li>');
         $('.gameslist').prepend(profile);
         $('.gameslist').listview('refresh');
-        startTracking();
         $('#profilelink').click(function() { showProfile() });
+        startTracking();
 	    } else {
 	      // if sign in was not successful, log the cause of the error on the console
 	      console.log(result);
