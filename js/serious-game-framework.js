@@ -167,7 +167,7 @@ $(document).ready(function() {
 		GAMEID = parseInt(gameID);
 		loadGame(GAMEID);
 
-		// TODO MARKO Send trace for starting a game
+		// Send trace for starting a game
 		// TODO MARKO add real oidc_userinfo
 		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "game_start",
 															{gameID: GAMEID});
@@ -178,7 +178,7 @@ $(document).ready(function() {
 	});
 
 	$('#elearning').click(function() {
-		// TODO MARKO Send trace for clicking an eLearning link
+		// Send trace for clicking an eLearning link
 		// TODO MARKO add real oidc_userinfo
 		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "elearning",
 															{gameID: GAMEID, levelID: CURRENTLEVEL});
@@ -187,8 +187,7 @@ $(document).ready(function() {
 	$('#wrapper-showme').click(function(){
 		showMe();
 
-		// TODO MARKO Send trace for using the show_me button
-		// TODO MARKO only send if not already logged incorrect answer
+		// Send trace for using the show_me button
 		// TODO MARKO add real oidc_userinfo
 		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
 															{gameID: GAMEID, levelID: CURRENTLEVEL, result: "show_me"});
@@ -1145,7 +1144,7 @@ $(document).ready(function() {
 							// Tell the user that the solution is wrong
 							$('#level-verification-wrong').show();
 
-							// TODO MARKO add sending traces with result = "wrong", do not track in Tutorial
+							// Send traces with result = "wrong", do not track in Tutorial
 							// TODO MARKO replace with real user_info
 							if(!TUTORIAL) {
 								gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
@@ -1156,7 +1155,7 @@ $(document).ready(function() {
 							// Tell the user that the solution is correct
 							$('#level-verification-correct').show();
 
-							// TODO MARKO add sending traces with result = "correct", do not track in Tutorial
+							// Send traces with result = "correct", do not track in Tutorial
 							// TODO MARKO replace with real user_info
 							if(!TUTORIAL) {
 								gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
@@ -1378,7 +1377,7 @@ startTracking = function() {
 	// TODO MARKO add real_oidc_userinfo
 	gleaner_tracker.startTracking({email: "marko.kajzer@hotmail.de"});
 
-	// TODO MARKO Send trace for starting a session
+	// Send trace for starting a session
 	// TODO MARKO add real oidc_userinfo
 	gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "login");
 }
