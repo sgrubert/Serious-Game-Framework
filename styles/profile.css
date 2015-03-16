@@ -48,3 +48,28 @@ img.badge-img {
   margin: 0px 5px;
   margin-bottom: -20px;
 }
+
+
+/* StatisticsContainer */
+div#stats {
+  width: 840px;
+  margin: auto;
+  margin-top: 25px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+div#stats div.ui-field-contain {
+  margin-left: 25px;
+  margin-bottom: 0px;
+}
+
+div#stats label {
+  margin-right: 20px;
+}
+
+div#stats-header {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 20px;
+}

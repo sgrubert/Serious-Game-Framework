@@ -31,6 +31,7 @@ var GAMESTATE = "leveldone";
 
 var badge_asserter = new BadgeAsserter();
 var gleaner_tracker = new GleanerTracker();
+var profile_initialized = false;
 
 // AJAX Requests only when Client is online
 //if (navigator.onLine) {
@@ -184,7 +185,19 @@ $(document).ready(function() {
 															{gameID: GAMEID, levelID: CURRENTLEVEL});
 	});
 
-	$('#wrapper-showme').click(function(){
+	$('#stats-game-select').change(function(element) {
+		var act_type = $('#chart-1')[0].checked ? "pie" : "bar";
+		changeChart($("#stats-game-select option:selected").val(), act_type);
+	});
+
+	$('#chart-1').click(function() {
+		changeChart($("#stats-game-select option:selected").val(), $('#chart-1').val());
+	});
+	$('#chart-2').click(function() {
+		changeChart($("#stats-game-select option:selected").val(), $('#chart-2').val());
+	});
+
+	$('#wrapper-showme').click(function() {
 		showMe();
 
 		// Send trace for using the show_me button
@@ -1383,10 +1396,20 @@ startTracking = function() {
 }
 
 showProfile = function() {
+	if(profile_initialized) return;
+	profile_initialized = true;
+
 	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
 
+	// Insert oidc_userinfo
+	// $('div#user_name').text(oidc_userinfo.preferred_username);
+	// $('div#user_real_name').text(oidc_userinfo.name);
+	// $('div#user_email').text(oidc_userinfo.email);
+	// $('div#user_phone').text(oidc_userinfo.phone_number);
+
+	// Insert earnedBadges
 	$.ajax({
-	  url: "http://localhost:3000/collect/badges", // TODO MARKO add real url
+	  url: "http://localhost:3000/collect/profiles", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
       'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
@@ -1402,8 +1425,116 @@ showProfile = function() {
     }
 	});
 
-	$('div#user_name').text(oidc_userinfo.preferred_username);
-	$('div#user_real_name').text(oidc_userinfo.name);
-	$('div#user_email').text(oidc_userinfo.email);
-	$('div#user_phone').text(oidc_userinfo.phone_number);
+	// Insert Statistics
+	// Insert SelectOptions for each game besides Tutorial
+	$.each(GAMESDATA, function(i, game) {
+		if(game.name !== 'Tutorial') {
+			$('#stats-game-select').append('<option value="'+ i +'">' + game.name + '</option>');
+		}
+	});
+
+	// TODO MARKO Remove this testgame
+	$('#stats-game-select').append('<option value="2">Test Game 2</option>');
+
+	// Query statistics for Hormones game
+	$.ajax({
+	  url: "http://localhost:3000/collect/traces/1", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+    },
+    success: function(result) {
+    	// If everything went ok, draw the chart
+    	drawChart(result);
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
+    }
+	});
+}
+
+drawChart = function(stats, type) {
+	var chart_type = type || "pie";
+
+	if(chart_type == "pie") {
+		// Create the data table.
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Result');
+		data.addColumn('number', '#');
+		data.addRows([
+		  ['Correct', stats.correct],
+		  ['Wrong', stats.wrong],
+		  ['Show Me', stats.show_me]
+		]);
+
+		// Set chart options
+		var options = {
+			chartArea: {
+				left: 250,
+				top: 0,
+				width: '100%',
+				height: '100%',
+			},
+			width: 625,
+			height: 400,
+     	colors: ['#009F00', '#DC3812', '#FF9500'],
+     	is3D: true,
+     	legend: {
+     		position: 'right',
+     		alignment:'center'
+     	},
+     	pieSliceText: 'value'
+    };
+
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.PieChart(document.getElementById('chart-container'));
+		chart.draw(data, options);
+	}
+	else if(chart_type == "bar") {
+		var data = google.visualization.arrayToDataTable([
+		  ['Result', 'Correct', 'Wrong', 'Show Me' ],
+		  ['Test', stats.correct, stats.wrong, stats.show_me]
+		]);
+
+		var options = {
+			chartArea: {
+				left: 250
+			},
+		  width: 625,
+		  height: 400,
+		  colors: ['#009F00', '#DC3812', '#FF9500'],
+		  legend: {
+		  	position: 'right',
+		  	alignment:'center'
+		  },
+		  bar: { groupWidth: '75%' },
+		  isStacked: true
+		};
+
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart-container'));
+		chart.draw(data, options);
+	}
+}
+
+changeChart = function(gameID, type) {
+	console.log("GAMEID: " + gameID);
+	console.log("TYPE: " + type);
+
+	// Query statistics for newly selected game
+	$.ajax({
+	  url: "http://localhost:3000/collect/traces/" + gameID, // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+    },
+    success: function(result) {
+    	// If everything went ok, draw the chart
+    	drawChart(result, type);
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
+    }
+	});
 }

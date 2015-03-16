@@ -67,10 +67,18 @@
 	<script type="text/javascript" src="./js/jsrsasign/x509-1.1.js"></script>
 	<script type="text/javascript" src="./js/jsrsasign/crypto-1.1.js"></script>
 
-	<!-- import libraries for OpenBadges and Gleaner database -->
+	<!-- import libraries for OpenBadges, Gleaner database and Google Charts -->
 	<script type="text/javascript" src="https://backpack.openbadges.org/issuer.js"></script>
 	<script type="text/javascript" src="lib/badge-asserter.js"></script>
 	<script type="text/javascript" src="lib/gleaner-tracker.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script>
+			// Insert Statistics and Charts
+			// Load the Visualization API and the piechart package.
+		  google.load('visualization', '1.0', {'packages':['corechart']});
+		  // Set a callback to run when the Google Visualization API is loaded.
+		  // google.setOnLoadCallback(drawChart);
+	</script>
 
 	<script src="data/games.json"></script>
 	<script src="data/connections.json"></script>
@@ -318,6 +326,29 @@
 			<div id="badges-container">
 			</div>
 		</div>
+
+		<div id="stats" class="ui-widget-content">
+			<div id="stats-header">Statistics</div>
+
+			<div data-role="fieldcontain">
+				<label for="select-choice-1" class="select">Choose Game: </label>
+				<select name="stats-game-select" id="stats-game-select"></select>
+			</div>
+
+			<div data-role="fieldcontain">
+	    <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+	    	<legend>Choose a chart:</legend>
+       	<input type="radio" name="chart-choice" id="chart-1" value="pie" checked="checked" />
+       	<label for="chart-1">Pie</label>
+
+       	<input type="radio" name="chart-choice" id="chart-2" value="bar" />
+       	<label for="chart-2">Bar</label>
+	    </fieldset>
+	    </div>
+
+			<div id="chart-container">
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -341,8 +372,8 @@
 	<!-- OpenID Connect Button Callback -->
 	<script type="text/javascript">
 		function signinCallback(result) {
-			// TODO MARKO
-	    if(result === "success"){
+			// TODO MARKO result === "success"
+	    if(true){
 	      // after successful sign in, display a welcome string for the user
 	      // TODO MARKO console.log("Hello, " + oidc_userinfo.name + "!");
         var profile =	$('<li>' +
