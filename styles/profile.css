@@ -73,3 +73,22 @@ div#stats-header {
   font-size: 32px;
   margin-top: 20px;
 }
+
+/* HighScoresContainer */
+div#high-score {
+  width: 840px;
+  margin: auto;
+  margin-top: 25px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+div#score-header {
+  text-align: center;
+  font-size: 32px;
+  margin: 20px auto;
+}
+
+.ui-table-columntoggle-btn {
+    display: none !important;
+}
