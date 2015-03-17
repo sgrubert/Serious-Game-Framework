@@ -1386,13 +1386,9 @@ $(document).ready(function() {
 });
 
 startTracking = function() {
-	// Send request to initialize first gameplay
+	// Send request to initialize first gameplay, which also sends a trace for starting a session
 	// TODO MARKO add real_oidc_userinfo
 	gleaner_tracker.startTracking({email: "marko.kajzer@hotmail.de"});
-
-	// Send trace for starting a session
-	// TODO MARKO add real oidc_userinfo
-	gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "login");
 }
 
 showProfile = function() {
@@ -1424,6 +1420,9 @@ showProfile = function() {
     	console.log("Can't get badges. Server down?");
     }
 	});
+
+	// Insert HighScores
+	addHighScores();
 
 	// Insert Statistics
 	// Insert SelectOptions for each game besides Tutorial
@@ -1518,9 +1517,6 @@ drawChart = function(stats, type) {
 }
 
 changeChart = function(gameID, type) {
-	console.log("GAMEID: " + gameID);
-	console.log("TYPE: " + type);
-
 	// Query statistics for newly selected game
 	$.ajax({
 	  url: "http://localhost:3000/collect/traces/" + gameID, // TODO MARKO add real url
@@ -1531,6 +1527,33 @@ changeChart = function(gameID, type) {
     success: function(result) {
     	// If everything went ok, draw the chart
     	drawChart(result, type);
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
+    }
+	});
+}
+
+addHighScores = function() {
+	// Query HighScore Ladder for this user
+	$.ajax({
+	  url: "http://localhost:3000/collect/highscore/", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+    },
+    success: function(result) {
+    	// If everything went ok, write results
+    	$.each(result, function(i, entry) {
+				$('#high-score-table tbody').prepend(
+					'<tr>'
+						+ '<td>1337</td>'
+						+ '<td>' + entry.user + '</td>'
+						+ '<td>' + entry.score + '</td>' +
+					'</tr>'
+				)
+    	});
     },
     error: function(err) {
     	console.log(err);
