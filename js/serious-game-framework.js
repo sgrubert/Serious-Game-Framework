@@ -1547,10 +1547,10 @@ addHighScores = function() {
     	// If everything went ok, write results
     	$.each(result, function(i, entry) {
 				$('#high-score-table tbody').prepend(
-					'<tr>'
-						+ '<td>1337</td>'
-						+ '<td>' + entry.user + '</td>'
-						+ '<td>' + entry.score + '</td>' +
+					'<tr>' +
+						'<td>' + entry.rank + '</td>' +
+						'<td>' + entry.user + '</td>' +
+						'<td>' + entry.score + '</td>' +
 					'</tr>'
 				)
     	});
