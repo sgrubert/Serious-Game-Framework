@@ -242,7 +242,7 @@ $(document).ready(function(){
         // either via the browse button, or via drag/drop:
         add: function (e, data) {
 
-			var tpl = $('<li class="working"><img src="images/Actions-edit-delete-icon.png" class="ui-li-icon" /><p><strong class="filename"></strong></p><p class="filesize"></p><div class="progressbar"><div class="progress-label">Loading...</div></div></li>');
+			var tpl = $('<li class="working"><img src="assets/images/Actions-edit-delete-icon.png" class="ui-li-icon" /><p><strong class="filename"></strong></p><p class="filesize"></p><div class="progressbar"><div class="progress-label">Loading...</div></div></li>');
 			
             // Append the file name and file size
             tpl.find('.filename').text(data.files[0].name);
@@ -296,7 +296,7 @@ $(document).ready(function(){
 
             if(progress == 100){
                 data.context.removeClass('working');
-				data.context.find('img').attr("src", "images/Actions-dialog-ok-apply-icon.png");
+				data.context.find('img').attr("src", "assets/images/Actions-dialog-ok-apply-icon.png");
             }
         },
 
