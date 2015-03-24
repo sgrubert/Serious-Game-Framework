@@ -58,6 +58,7 @@ span.badge-awarded {
 }
 
 
+
 /* StatisticsContainer */
 div#stats {
   width: 840px;
@@ -70,6 +71,7 @@ div#stats {
 div#stats div.ui-field-contain {
   margin-left: 25px;
   margin-bottom: 0px;
+  margin-top: 20px;
 }
 
 div#stats label {
@@ -81,6 +83,45 @@ div#stats-header {
   font-size: 32px;
   margin-top: 20px;
 }
+
+
+
+/* Worst Levels */
+div#worst-levels {
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
+}
+div#worst-header {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+div#worst-levels ul {
+  list-style: none;
+  padding: 0px;
+}
+div#worst-levels ul li {
+  display: inline-block;
+  width: 94px;
+  height: 68px;
+  border: 1px solid black;
+  vertical-align: middle;
+}
+div#worst-levels ul li div {
+  padding: 10px 0px;
+  color: #DC3812;
+  font-size: 14px;
+  line-height: 18px;
+}
+div#worst-levels ul li img {
+  width: 100%;
+  height: 100%;
+}
+
+
 
 /* HighScoresContainer */
 div#high-score {

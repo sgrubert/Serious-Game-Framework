@@ -31,99 +31,6 @@ var GAMESTATE = "leveldone";
 
 var badge_asserter = new BadgeAsserter();
 var gleaner_tracker = new GleanerTracker();
-var profile_initialized = false;
-
-// AJAX Requests only when Client is online
-//if (navigator.onLine) {
-//	var ajaxerror = false;
-//	// Load JSON file with level information
-//	$.ajax({
-//		'async': false,
-//		'global': false,
-//		'url': 'testdata/games.json',
-//		'dataType': "json",
-//		'success': function(data) {
-//			GAMESDATA = data;
-//		},
-//		'error': function(xhr, error) {
-//			ajaxerror = true;
-//		}
-//	});
-//	
-//	// Load JSON file with level information
-//	$.ajax({
-//		'async': false,
-//		'global': false,
-//		'url': 'testdata/levels.json',
-//		'dataType': "json",
-//		'success': function(data) {
-//			LEVELDATA = data;
-//		},
-//		'error': function(xhr, error) {
-//			ajaxerror = true;
-//		}
-//	});
-//
-//	// Load JSON file with pieces information
-//	$.ajax({
-//		'async': false,
-//		'global': false,
-//		'url': 'testdata/pieces.json',
-//		'dataType': "json",
-//		'success': function(data) {
-//			PIECESDATA = data;
-//		},
-//		'error': function(xhr, error) {
-//			ajaxerror = true;
-//		}
-//	});
-//	
-//	// Load JSON file with connections information
-//	$.ajax({
-//		'async': false,
-//		'global': false,
-//		'url': 'testdata/connections.json',
-//		'dataType': "json",
-//		'success': function(data) {
-//			CONNECTIONSDATA = data;
-//		},
-//		'error': function(xhr, error) {
-//			ajaxerror = true;
-//		}
-//	});
-//	
-//	// Load JSON file with tutorial information
-//	$.ajax({
-//		'async': false,
-//		'global': false,
-//		'url': 'testdata/tutorials.json',
-//		'dataType': "json",
-//		'success': function(data) {
-//			TUTORIALSDATA = data;
-//		},
-//		'error': function(xhr, error) {
-//			ajaxerror = true;
-//		}
-//	});
-//	
-//	ajaxerror ? GOTDATA = false : GOTDATA = true;
-//}
-
-//$.get('testdata/games.json', function(data) {
-//	GAMESDATA = data;
-//});
-//$.get('testdata/levels.json', function(data) {
-//	LEVELDATA = data;
-//});
-//$.get('testdata/pieces.json', function(data) {
-//	PIECESDATA = data;
-//});
-//$.get('testdata/connections.json', function(data) {
-//	CONNECTIONSDATA = data;
-//});
-//$.get('testdata/tutorials.json', function(data) {
-//	TUTORIALSDATA = data;
-//});
 
 // When DOM is loaded do the following
 $(document).ready(function() {
@@ -1495,6 +1402,32 @@ insertStatistics = function() {
 
 drawChart = function(stats, type) {
 	var chart_type = type || "pie";
+
+	// Remove old worst_levels
+	$.merge($('div#worst-levels').children('span'), $('div#worst-levels').children('ul')).remove();
+
+	// Draw worst_levels
+	if(stats.worst_levels.length > 0) {
+    for(var i = 0; i < stats.worst_levels.length; i++) {
+    	var level_data = stats.worst_levels[i];
+
+    	var level = $('<ul id="level'+ i +'"></ul>');
+    	$('#worst-levels').append(level);
+
+    	LEVELDATA[level_data.level].pieces.forEach(function(piece) {
+    		var tile = $('<li><img src="' + UPLOADPATH + PIECESDATA[piece].src + '"' +
+    			'alt="' + PIECESDATA[piece].description + '"></li>');
+    		$('ul#level' + i).append(tile);
+    	});
+
+    	// <div>Correct: ' + level_data.correct + ' Wrong: '+ level_data.wrong +'</div>
+    	tile = $('<li><div>' + level_data.wrong + '/' + (level_data.correct + level_data.wrong) +
+    		' (' + Math.floor(level_data.ratio * 100) + '%) wrong</div></li>');
+    	$('ul#level' + i).append(tile);
+    }
+	} else {
+	  $('div#worst-levels').append('<span>Congratulations! You have studied exceptionally well!</span>');
+	}
 
 	if(chart_type == "pie") {
 		// Create the data table.
