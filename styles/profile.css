@@ -40,13 +40,21 @@ div#earned-badges {
 div#badges-header {
   text-align: center;
   font-size: 32px;
-  margin-top: 20px;
+  margin: 20px 0px;
+}
+
+span.badge-img {
+  margin: 0px 32px;
 }
 
 img.badge-img {
-  width: 200px;
-  margin: 0px 5px;
-  margin-bottom: -20px;
+  width: 220px;
+}
+
+span.badge-awarded {
+  font-size: 32pt;
+  color: #FF9500;
+  margin-left: -50px;
 }
 
 
