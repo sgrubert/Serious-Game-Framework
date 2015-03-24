@@ -1392,8 +1392,10 @@ startTracking = function() {
 }
 
 showProfile = function() {
-	if(profile_initialized) return;
-	profile_initialized = true;
+	// Remove everything from profile and reload
+	$('#badges-container').children().remove();
+	$('#stats-game-select').children().remove();
+	$('#high-score-table tbody').children().remove();
 
 	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
 
@@ -1404,6 +1406,16 @@ showProfile = function() {
 	// $('div#user_phone').text(oidc_userinfo.phone_number);
 
 	// Insert earnedBadges
+	insertBadges();
+
+	// Insert HighScores
+	insertHighScores();
+
+	// Insert Statistics
+	insertStatistics();
+}
+
+insertBadges = function() {
 	$.ajax({
 	  url: "http://localhost:3000/collect/profiles", // TODO MARKO add real url
 	  dataType: "json",
@@ -1412,7 +1424,10 @@ showProfile = function() {
     },
     success: function(result) {
     	for(var i = 0; i < result.earnedBadges.length; i++) {
-    		var badge = $('<img class="badge-img" src="data/badges/' + result.earnedBadges[i] + '-badge.png">');
+    		var badge = $('<span class="badge-img">' +
+    				'<img class="badge-img" src="data/badges/' + result.earnedBadges[i].path + '-badge.png">' +
+    				'<span class="badge-awarded">x'+ result.earnedBadges[i].awarded +'</span>' +
+    			'</span>');
     		$('div#badges-container').append(badge);
     	}
     },
@@ -1420,11 +1435,36 @@ showProfile = function() {
     	console.log("Can't get badges. Server down?");
     }
 	});
+}
 
-	// Insert HighScores
-	addHighScores();
+insertHighScores = function() {
+	// Query HighScore Ladder for this user
+	$.ajax({
+	  url: "http://localhost:3000/collect/highscore/", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+    },
+    success: function(result) {
+    	// If everything went ok, write results
+    	$.each(result, function(i, entry) {
+				$('#high-score-table tbody').prepend(
+					'<tr>' +
+						'<td>' + entry.rank + '</td>' +
+						'<td>' + entry.user + '</td>' +
+						'<td>' + entry.score + '</td>' +
+					'</tr>'
+				)
+    	});
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
+    }
+	});
+}
 
-	// Insert Statistics
+insertStatistics = function() {
 	// Insert SelectOptions for each game besides Tutorial
 	$.each(GAMESDATA, function(i, game) {
 		if(game.name !== 'Tutorial') {
@@ -1527,33 +1567,6 @@ changeChart = function(gameID, type) {
     success: function(result) {
     	// If everything went ok, draw the chart
     	drawChart(result, type);
-    },
-    error: function(err) {
-    	console.log(err);
-    	console.log("Can't get traces. Server down?");
-    }
-	});
-}
-
-addHighScores = function() {
-	// Query HighScore Ladder for this user
-	$.ajax({
-	  url: "http://localhost:3000/collect/highscore/", // TODO MARKO add real url
-	  dataType: "json",
-	  headers: {
-      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
-    },
-    success: function(result) {
-    	// If everything went ok, write results
-    	$.each(result, function(i, entry) {
-				$('#high-score-table tbody').prepend(
-					'<tr>' +
-						'<td>' + entry.rank + '</td>' +
-						'<td>' + entry.user + '</td>' +
-						'<td>' + entry.score + '</td>' +
-					'</tr>'
-				)
-    	});
     },
     error: function(err) {
     	console.log(err);
