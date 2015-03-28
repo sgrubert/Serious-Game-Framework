@@ -108,13 +108,25 @@ $(document).ready(function() {
 	// Functions for Designer Statistics
 	$('#designer-stats-game-select').change(function(element) {
 		var act_type = $('#designer-chart-1')[0].checked ? "pie" : "bar";
-		changeChart($("#designer-stats-game-select option:selected").val(), act_type);
+		changeChart($("#designer-stats-game-select option:selected").val(), act_type, 'designer-');
 	});
 	$('#designer-chart-1').click(function() {
-		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-1').val());
+		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-1').val(), 'designer-');
 	});
 	$('#designer-chart-2').click(function() {
-		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-2').val());
+		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-2').val(), 'designer-');
+	});
+
+	// Functions for Admin Statistics
+	$('#admin-stats-game-select').change(function(element) {
+		var act_type = $('#admin-chart-1')[0].checked ? "pie" : "bar";
+		changeChart($("#admin-stats-game-select option:selected").val(), act_type, 'admin-');
+	});
+	$('#admin-chart-1').click(function() {
+		changeChart($("#admin-stats-game-select option:selected").val(), $('#admin-chart-1').val(), 'admin-');
+	});
+	$('#admin-chart-2').click(function() {
+		changeChart($("#admin-stats-game-select option:selected").val(), $('#admin-chart-2').val(), 'admin-');
 	});
 
 	$('#wrapper-showme').click(function() {
@@ -1317,10 +1329,10 @@ showProfile = function() {
 	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
 
 	// Insert oidc_userinfo
-	// $('div#user_name').text(oidc_userinfo.preferred_username);
-	// $('div#user_real_name').text(oidc_userinfo.name);
-	// $('div#user_email').text(oidc_userinfo.email);
-	// $('div#user_phone').text(oidc_userinfo.phone_number);
+	$('div#user_name').text(oidc_userinfo.preferred_username);
+	$('div#user_real_name').text(oidc_userinfo.name);
+	$('div#user_email').text(oidc_userinfo.email);
+	$('div#user_phone').text(oidc_userinfo.phone_number);
 
 	// Query profile
 	$.ajax({
@@ -1337,7 +1349,7 @@ showProfile = function() {
     		insertGameDesignerStatistics(result.designed);
     	}
 
-    	if(result.admin == true) {
+    	if(result.admin === true) {
     		insertAdminStatistics();
     	}
     },
@@ -1419,35 +1431,115 @@ insertPlayerStatistics = function() {
 	});
 }
 
-drawChart = function(stats, type, chart_container) {
-	var chart_type = type || "pie";
-	var chart_container = chart_container || 'player-';
-	chart_container += 'chart-container';
+insertGameDesignerStatistics = function(designed_games) {
+	console.log(designed_games);
+	if(designed_games.length > 0) {
+		$('div.stats#game-designer').show();
+	}
+	else {
+		console.log("No Games designed as of yet!");
+		return;
+	}
 
-	// Remove old worst_levels
-	$.merge($('div#worst-levels').children('span'), $('div#worst-levels').children('ul')).remove();
+	// Insert SelectOptions for each game the user has designed
+	$.each(designed_games, function(i, game) {
+		$('#designer-stats-game-select').append('<option value="'+ (i + 1) +'">' + GAMESDATA[game].name + '</option>');
+	});
 
-	// Draw worst_levels
-	if(stats.worst_levels.length > 0) {
-    for(var i = 0; i < stats.worst_levels.length; i++) {
-    	var level_data = stats.worst_levels[i];
+	// TODO MARKO Remove this testgame, which is for showcasing only
+	$('#designer-stats-game-select').append('<option value="2">Test Game 2</option>');
+	$('#designer-stats-game-select').selectmenu('refresh');
 
-    	var level = $('<ul id="level'+ i +'"></ul>');
-    	$('#worst-levels').append(level);
-
-    	LEVELDATA[level_data.level].pieces.forEach(function(piece) {
-    		var tile = $('<li><img src="' + UPLOADPATH + PIECESDATA[piece].src + '"' +
-    			'alt="' + PIECESDATA[piece].description + '"></li>');
-    		$('ul#level' + i).append(tile);
-    	});
-
-    	// <div>Correct: ' + level_data.correct + ' Wrong: '+ level_data.wrong +'</div>
-    	tile = $('<li><div>' + level_data.wrong + '/' + (level_data.correct + level_data.wrong) +
-    		' (' + Math.floor(level_data.ratio * 100) + '%) wrong</div></li>');
-    	$('ul#level' + i).append(tile);
+	// Query statistics for first game of this user
+	$.ajax({
+	  url: "http://localhost:3000/collect/traces/" + designed_games[0] + "?type=designer", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': oidc_userinfo.email
+    },
+    success: function(result) {
+    	// If everything went ok, draw the chart
+    	drawChart(result, "", "designer-");
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
     }
-	} else {
-	  $('div#worst-levels').append('<span>Congratulations! You have studied exceptionally well! (or not at all...)</span>');
+	});
+}
+
+insertAdminStatistics = function() {
+	$('div.stats#admin').show();
+	// Insert SelectOptions for each game besides Tutorial
+	$.each(GAMESDATA, function(i, game) {
+		if(game.name !== 'Tutorial') {
+			$('#admin-stats-game-select').append('<option value="'+ i +'">' + game.name + '</option>');
+		}
+	});
+
+	// TODO MARKO Remove this testgame, which is for showcasing only
+	$('#admin-stats-game-select').append('<option value="2">Test Game 2</option>');
+	$('#admin-stats-game-select').selectmenu('refresh');
+
+	// Query statistics for Hormones game
+	$.ajax({
+	  url: "http://localhost:3000/collect/traces/1?type=admin", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': oidc_userinfo.email
+    },
+    success: function(result) {
+    	// If everything went ok, draw the chart
+    	drawChart(result, "", "admin-");
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
+    }
+	});
+}
+
+
+drawChart = function(stats, type, prefix) {
+	var chart_type = type || 'pie';
+	var prefix = prefix || 'player-';
+	var chart_container = prefix + 'chart-container';
+
+	if(prefix !== 'admin-') {
+		var worst_level_div = 'div#' + prefix + 'worst-levels';
+		// Remove old worst_levels
+		$.merge($(worst_level_div).children('span'), $(worst_level_div).children('ul')).remove();
+
+		// Draw worst_levels
+		if(stats.worst_levels.length > 0) {
+	    for(var i = 0; i < stats.worst_levels.length; i++) {
+	    	var level_data = stats.worst_levels[i];
+
+	    	var level = $('<ul id="level'+ i +'"></ul>');
+	    	$(worst_level_div).append(level);
+
+	    	LEVELDATA[level_data.level].pieces.forEach(function(piece) {
+	    		var tile = $('<li><img src="' + UPLOADPATH + PIECESDATA[piece].src + '"' +
+	    			'alt="' + PIECESDATA[piece].description + '"></li>');
+	    		$('ul#level' + i).append(tile);
+	    	});
+
+	    	// <div>Correct: ' + level_data.correct + ' Wrong: '+ level_data.wrong +'</div>
+	    	tile = $('<li><div>' + level_data.wrong + '/' + (level_data.correct + level_data.wrong) +
+	    		' (' + Math.floor(level_data.ratio * 100) + '%) wrong</div></li>');
+	    	$('ul#level' + i).append(tile);
+	    }
+		} else {
+			var string;
+			if(prefix === "player-") {
+				string = 'Congratulations! You have studied exceptionally well! (or not at all...)';
+			}
+			else if(prefix === 'designer-') {
+				string = 'No levels were solved exceptionally bad.';
+			}
+
+		  $(worst_level_div).append('<span>'+ string +'</span>');
+		}
 	}
 
 	if(chart_type == "pie") {
@@ -1512,7 +1604,7 @@ drawChart = function(stats, type, chart_container) {
 	}
 }
 
-changeChart = function(gameID, type) {
+changeChart = function(gameID, type, prefix) {
 	// Query statistics for newly selected game
 	$.ajax({
 	  url: "http://localhost:3000/collect/traces/" + gameID, // TODO MARKO add real url
@@ -1522,49 +1614,11 @@ changeChart = function(gameID, type) {
     },
     success: function(result) {
     	// If everything went ok, draw the chart
-    	drawChart(result, type);
+    	drawChart(result, type, prefix);
     },
     error: function(err) {
     	console.log(err);
     	console.log("Can't get traces. Server down?");
     }
 	});
-}
-
-insertGameDesignerStatistics = function(designed_games) {
-	if(designed_games.length > 0) {
-		$('div.stats#game-designer').show();
-	}
-	else {
-		console.log("No Games designed as of yet!");
-		return;
-	}
-
-	// Insert SelectOptions for each game the user has designed
-	$.each(designed_games, function(i, game) {
-		$('#designer-stats-game-select').append('<option value="'+ i +'">' + GAMESDATA[game].name + '</option>');
-	});
-
-	$('#designer-stats-game-select').selectmenu('refresh');
-
-	// Query statistics for first game of this user
-	$.ajax({
-	  url: "http://localhost:3000/collect/traces/" + designed_games[0] + "?type=designer", // TODO MARKO add real url
-	  dataType: "json",
-	  headers: {
-      'Email': oidc_userinfo.email
-    },
-    success: function(result) {
-    	// If everything went ok, draw the chart
-    	drawChart(result, "", "designer-");
-    },
-    error: function(err) {
-    	console.log(err);
-    	console.log("Can't get traces. Server down?");
-    }
-	});
-}
-
-insertAdminStatistics = function() {
-
 }
