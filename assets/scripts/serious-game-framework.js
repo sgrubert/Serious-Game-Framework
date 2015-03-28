@@ -34,6 +34,7 @@ var oidc_userinfo = {name: "Marko Kajzer", preferred_username: "marko.kajzer", e
 
 var badge_asserter = new BadgeAsserter();
 var gleaner_tracker = new GleanerTracker();
+var chart_creator = new ChartCreator();
 
 // When DOM is loaded do the following
 $(document).ready(function() {
@@ -96,37 +97,37 @@ $(document).ready(function() {
 	// Functions for Player Statistics
 	$('#stats-game-select').change(function(element) {
 		var act_type = $('#chart-1')[0].checked ? "pie" : "bar";
-		changeChart($("#stats-game-select option:selected").val(), act_type);
+		chart_creator.changeChart($("#stats-game-select option:selected").val(), act_type);
 	});
 	$('#chart-1').click(function() {
-		changeChart($("#stats-game-select option:selected").val(), $('#chart-1').val());
+		chart_creator.changeChart($("#stats-game-select option:selected").val(), $('#chart-1').val());
 	});
 	$('#chart-2').click(function() {
-		changeChart($("#stats-game-select option:selected").val(), $('#chart-2').val());
+		chart_creator.changeChart($("#stats-game-select option:selected").val(), $('#chart-2').val());
 	});
 
 	// Functions for Designer Statistics
 	$('#designer-stats-game-select').change(function(element) {
 		var act_type = $('#designer-chart-1')[0].checked ? "pie" : "bar";
-		changeChart($("#designer-stats-game-select option:selected").val(), act_type, 'designer-');
+		chart_creator.changeChart($("#designer-stats-game-select option:selected").val(), act_type, 'designer-');
 	});
 	$('#designer-chart-1').click(function() {
-		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-1').val(), 'designer-');
+		chart_creator.changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-1').val(), 'designer-');
 	});
 	$('#designer-chart-2').click(function() {
-		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-2').val(), 'designer-');
+		chart_creator.changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-2').val(), 'designer-');
 	});
 
 	// Functions for Admin Statistics
 	$('#admin-stats-game-select').change(function(element) {
 		var act_type = $('#admin-chart-1')[0].checked ? "pie" : "bar";
-		changeChart($("#admin-stats-game-select option:selected").val(), act_type, 'admin-');
+		chart_creator.changeChart($("#admin-stats-game-select option:selected").val(), act_type, 'admin-');
 	});
 	$('#admin-chart-1').click(function() {
-		changeChart($("#admin-stats-game-select option:selected").val(), $('#admin-chart-1').val(), 'admin-');
+		chart_creator.changeChart($("#admin-stats-game-select option:selected").val(), $('#admin-chart-1').val(), 'admin-');
 	});
 	$('#admin-chart-2').click(function() {
-		changeChart($("#admin-stats-game-select option:selected").val(), $('#admin-chart-2').val(), 'admin-');
+		chart_creator.changeChart($("#admin-stats-game-select option:selected").val(), $('#admin-chart-2').val(), 'admin-');
 	});
 
 	$('#wrapper-showme').click(function() {
@@ -1422,7 +1423,7 @@ insertPlayerStatistics = function() {
     },
     success: function(result) {
     	// If everything went ok, draw the chart
-    	drawChart(result);
+    	chart_creator.drawChart(result);
     },
     error: function(err) {
     	console.log(err);
@@ -1459,7 +1460,7 @@ insertGameDesignerStatistics = function(designed_games) {
     },
     success: function(result) {
     	// If everything went ok, draw the chart
-    	drawChart(result, "", "designer-");
+    	chart_creator.drawChart(result, "", "designer-");
     },
     error: function(err) {
     	console.log(err);
@@ -1490,131 +1491,7 @@ insertAdminStatistics = function() {
     },
     success: function(result) {
     	// If everything went ok, draw the chart
-    	drawChart(result, "", "admin-");
-    },
-    error: function(err) {
-    	console.log(err);
-    	console.log("Can't get traces. Server down?");
-    }
-	});
-}
-
-
-drawChart = function(stats, type, prefix) {
-	var chart_type = type || 'pie';
-	var prefix = prefix || 'player-';
-	var chart_container = prefix + 'chart-container';
-
-	if(prefix !== 'admin-') {
-		var worst_level_div = 'div#' + prefix + 'worst-levels';
-		// Remove old worst_levels
-		$.merge($(worst_level_div).children('span'), $(worst_level_div).children('ul')).remove();
-
-		// Draw worst_levels
-		if(stats.worst_levels.length > 0) {
-	    for(var i = 0; i < stats.worst_levels.length; i++) {
-	    	var level_data = stats.worst_levels[i];
-
-	    	var level = $('<ul id="level'+ i +'"></ul>');
-	    	$(worst_level_div).append(level);
-
-	    	LEVELDATA[level_data.level].pieces.forEach(function(piece) {
-	    		var tile = $('<li><img src="' + UPLOADPATH + PIECESDATA[piece].src + '"' +
-	    			'alt="' + PIECESDATA[piece].description + '"></li>');
-	    		$('ul#level' + i).append(tile);
-	    	});
-
-	    	// <div>Correct: ' + level_data.correct + ' Wrong: '+ level_data.wrong +'</div>
-	    	tile = $('<li><div>' + level_data.wrong + '/' + (level_data.correct + level_data.wrong) +
-	    		' (' + Math.floor(level_data.ratio * 100) + '%) wrong</div></li>');
-	    	$('ul#level' + i).append(tile);
-	    }
-		} else {
-			var string;
-			if(prefix === "player-") {
-				string = 'Congratulations! You have studied exceptionally well! (or not at all...)';
-			}
-			else if(prefix === 'designer-') {
-				string = 'No levels were solved exceptionally bad.';
-			}
-
-		  $(worst_level_div).append('<span>'+ string +'</span>');
-		}
-	}
-
-	if(chart_type == "pie") {
-		// Create the data table.
-		var data = new google.visualization.DataTable();
-		data.addColumn('string', 'Result');
-		data.addColumn('number', '#');
-		data.addRows([
-		  ['Correct', stats.correct],
-		  ['Wrong', stats.wrong]
-		  // Don't use show me in graphs
-		  // ['Show Me', stats.show_me]
-		]);
-
-		// Set chart options
-		var options = {
-			chartArea: {
-				left: 250,
-				top: 0,
-				width: '100%',
-				height: '100%',
-			},
-			width: 625,
-			height: 400,
-     	colors: ['#009F00', '#DC3812', '#FF9500'],
-     	is3D: true,
-     	legend: {
-     		position: 'right',
-     		alignment:'center'
-     	},
-     	pieSliceText: 'value'
-    };
-
-		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.PieChart(document.getElementById(chart_container));
-		chart.draw(data, options);
-	}
-	else if(chart_type == "bar") {
-		var game_name = stats.target_game == 2 ? 'Test' : GAMESDATA[stats.target_game].name;
-		var data = google.visualization.arrayToDataTable([
-		  ['Result', 'Correct', 'Wrong'], // 'Show Me'
-		  [game_name, stats.correct, stats.wrong] // stats.show_me
-		]);
-
-		var options = {
-			chartArea: {
-				left: 250
-			},
-		  width: 625,
-		  height: 400,
-		  colors: ['#009F00', '#DC3812', '#FF9500'],
-		  legend: {
-		  	position: 'right',
-		  	alignment:'center'
-		  },
-		  bar: { groupWidth: '75%' },
-		  isStacked: true
-		};
-
-		var chart = new google.visualization.ColumnChart(document.getElementById(chart_container));
-		chart.draw(data, options);
-	}
-}
-
-changeChart = function(gameID, type, prefix) {
-	// Query statistics for newly selected game
-	$.ajax({
-	  url: "http://localhost:3000/collect/traces/" + gameID, // TODO MARKO add real url
-	  dataType: "json",
-	  headers: {
-      'Email': oidc_userinfo.email
-    },
-    success: function(result) {
-    	// If everything went ok, draw the chart
-    	drawChart(result, type, prefix);
+    	chart_creator.drawChart(result, "", "admin-");
     },
     error: function(err) {
     	console.log(err);
