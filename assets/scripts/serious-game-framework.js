@@ -93,16 +93,28 @@ $(document).ready(function() {
 															{gameID: GAMEID, levelID: CURRENTLEVEL});
 	});
 
+	// Functions for Player Statistics
 	$('#stats-game-select').change(function(element) {
 		var act_type = $('#chart-1')[0].checked ? "pie" : "bar";
 		changeChart($("#stats-game-select option:selected").val(), act_type);
 	});
-
 	$('#chart-1').click(function() {
 		changeChart($("#stats-game-select option:selected").val(), $('#chart-1').val());
 	});
 	$('#chart-2').click(function() {
 		changeChart($("#stats-game-select option:selected").val(), $('#chart-2').val());
+	});
+
+	// Functions for Designer Statistics
+	$('#designer-stats-game-select').change(function(element) {
+		var act_type = $('#designer-chart-1')[0].checked ? "pie" : "bar";
+		changeChart($("#designer-stats-game-select option:selected").val(), act_type);
+	});
+	$('#designer-chart-1').click(function() {
+		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-1').val());
+	});
+	$('#designer-chart-2').click(function() {
+		changeChart($("#designer-stats-game-select option:selected").val(), $('#designer-chart-2').val());
 	});
 
 	$('#wrapper-showme').click(function() {
@@ -1298,6 +1310,8 @@ showProfile = function() {
 	// Remove everything from profile and reload
 	$('#badges-container').children().remove();
 	$('#stats-game-select').children().remove();
+	$('#designer-stats-game-select').children().remove();
+	$('#admin-stats-game-select').children().remove();
 	$('#high-score-table tbody').children().remove();
 
 	var timer = window.setTimeout(function () { document.title = "Profile" }, 500);
@@ -1308,17 +1322,7 @@ showProfile = function() {
 	// $('div#user_email').text(oidc_userinfo.email);
 	// $('div#user_phone').text(oidc_userinfo.phone_number);
 
-	// Insert earnedBadges
-	insertBadges();
-
-	// Insert HighScores
-	insertHighScores();
-
-	// Insert Statistics
-	insertStatistics();
-}
-
-insertBadges = function() {
+	// Query profile
 	$.ajax({
 	  url: "http://localhost:3000/collect/profiles", // TODO MARKO add real url
 	  dataType: "json",
@@ -1326,18 +1330,37 @@ insertBadges = function() {
       'Email': oidc_userinfo.email
     },
     success: function(result) {
-    	for(var i = 0; i < result.earnedBadges.length; i++) {
-    		var badge = $('<span class="badge-img">' +
-    				'<img class="badge-img" src="data/badges/' + result.earnedBadges[i].path + '-badge.png">' +
-    				'<span class="badge-awarded">x'+ result.earnedBadges[i].awarded +'</span>' +
-    			'</span>');
-    		$('div#badges-container').append(badge);
+    	// Insert earnedBadges
+    	insertBadges(result);
+
+    	if(result.designed.length > 0) {
+    		insertGameDesignerStatistics(result.designed);
+    	}
+
+    	if(result.admin == true) {
+    		insertAdminStatistics();
     	}
     },
     error: function() {
     	console.log("Can't get badges. Server down?");
     }
 	});
+
+	// Insert HighScores
+	insertHighScores();
+
+	// Insert Statistics
+	insertPlayerStatistics();
+}
+
+insertBadges = function(profile) {
+	for(var i = 0; i < profile.earnedBadges.length; i++) {
+		var badge = $('<span class="badge-img">' +
+				'<img class="badge-img" src="data/badges/' + profile.earnedBadges[i].path + '-badge.png">' +
+				'<span class="badge-awarded">x'+ profile.earnedBadges[i].awarded +'</span>' +
+			'</span>');
+		$('div#badges-container').append(badge);
+	}
 }
 
 insertHighScores = function() {
@@ -1367,7 +1390,7 @@ insertHighScores = function() {
 	});
 }
 
-insertStatistics = function() {
+insertPlayerStatistics = function() {
 	// Insert SelectOptions for each game besides Tutorial
 	$.each(GAMESDATA, function(i, game) {
 		if(game.name !== 'Tutorial') {
@@ -1396,8 +1419,10 @@ insertStatistics = function() {
 	});
 }
 
-drawChart = function(stats, type) {
+drawChart = function(stats, type, chart_container) {
 	var chart_type = type || "pie";
+	var chart_container = chart_container || 'player-';
+	chart_container += 'chart-container';
 
 	// Remove old worst_levels
 	$.merge($('div#worst-levels').children('span'), $('div#worst-levels').children('ul')).remove();
@@ -1457,14 +1482,14 @@ drawChart = function(stats, type) {
     };
 
 		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.PieChart(document.getElementById('chart-container'));
+		var chart = new google.visualization.PieChart(document.getElementById(chart_container));
 		chart.draw(data, options);
 	}
 	else if(chart_type == "bar") {
-		console.log("")
+		var game_name = stats.target_game == 2 ? 'Test' : GAMESDATA[stats.target_game].name;
 		var data = google.visualization.arrayToDataTable([
 		  ['Result', 'Correct', 'Wrong'], // 'Show Me'
-		  [GAMESDATA[stats.target_game].name, stats.correct, stats.wrong] // stats.show_me
+		  [game_name, stats.correct, stats.wrong] // stats.show_me
 		]);
 
 		var options = {
@@ -1482,7 +1507,7 @@ drawChart = function(stats, type) {
 		  isStacked: true
 		};
 
-		var chart = new google.visualization.ColumnChart(document.getElementById('chart-container'));
+		var chart = new google.visualization.ColumnChart(document.getElementById(chart_container));
 		chart.draw(data, options);
 	}
 }
@@ -1504,4 +1529,42 @@ changeChart = function(gameID, type) {
     	console.log("Can't get traces. Server down?");
     }
 	});
+}
+
+insertGameDesignerStatistics = function(designed_games) {
+	if(designed_games.length > 0) {
+		$('div.stats#game-designer').show();
+	}
+	else {
+		console.log("No Games designed as of yet!");
+		return;
+	}
+
+	// Insert SelectOptions for each game the user has designed
+	$.each(designed_games, function(i, game) {
+		$('#designer-stats-game-select').append('<option value="'+ i +'">' + GAMESDATA[game].name + '</option>');
+	});
+
+	$('#designer-stats-game-select').selectmenu('refresh');
+
+	// Query statistics for first game of this user
+	$.ajax({
+	  url: "http://localhost:3000/collect/traces/" + designed_games[0] + "?type=designer", // TODO MARKO add real url
+	  dataType: "json",
+	  headers: {
+      'Email': oidc_userinfo.email
+    },
+    success: function(result) {
+    	// If everything went ok, draw the chart
+    	drawChart(result, "", "designer-");
+    },
+    error: function(err) {
+    	console.log(err);
+    	console.log("Can't get traces. Server down?");
+    }
+	});
+}
+
+insertAdminStatistics = function() {
+
 }

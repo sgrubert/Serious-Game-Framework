@@ -342,11 +342,12 @@
 			</table>
 		</div>
 
-		<div id="stats" class="ui-widget-content">
-			<div id="stats-header">Statistics</div>
+		<!-- Stats for Players -->
+		<div class="ui-widget-content stats" id="player">
+			<div class="stats-header">Statistics</div>
 
 			<div data-role="fieldcontain">
-				<label for="select-choice-1" class="select">Choose Game: </label>
+				<label for="stats-game-select" class="select">Choose Game: </label>
 				<select name="stats-game-select" id="stats-game-select"></select>
 			</div>
 
@@ -365,9 +366,68 @@
 		    </fieldset>
 	    </div>
 
-			<div id="chart-container">
+			<div id="player-chart-container">
 			</div>
 		</div>
+		<!-- END Stats for Players END -->
+
+		<!-- Stats for Game Designers -->
+		<div class="ui-widget-content stats" id="game-designer">
+			<div class="stats-header">Statistics of games created by you</div>
+
+			<div data-role="fieldcontain">
+				<label for="designer-stats-game-select" class="select">Choose Game: </label>
+				<select name="designer-stats-game-select" id="designer-stats-game-select"></select>
+			</div>
+
+			<div id="worst-levels">
+				<div id="worst-header">Worst Levels</div>
+			</div>
+
+			<div data-role="fieldcontain">
+		    <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+		    	<legend>Choose a chart:</legend>
+	       	<input type="radio" name="designer-chart-choice" id="designer-chart-1" value="pie" checked="checked" />
+	       	<label for="designer-chart-1">Pie</label>
+
+	       	<input type="radio" name="designer-chart-choice" id="designer-chart-2" value="bar" />
+	       	<label for="designer-chart-2">Bar</label>
+		    </fieldset>
+	    </div>
+
+			<div id="designer-chart-container">
+			</div>
+		</div>
+		<!-- END Stats for Game Designers END -->
+
+		<!-- Stats for Admins -->
+		<div class="ui-widget-content stats" id="admin">
+			<div class="stats-header">Admin Statistics</div>
+
+			<div data-role="fieldcontain">
+				<label for="admin-stats-game-select" class="select">Choose Game: </label>
+				<select name="admin-stats-game-select" id="admin-stats-game-select"></select>
+			</div>
+
+			<div id="worst-levels">
+				<div id="worst-header">Worst Levels</div>
+			</div>
+
+			<div data-role="fieldcontain">
+		    <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+		    	<legend>Choose a chart:</legend>
+	       	<input type="radio" name="admin-chart-choice" id="admin-chart-1" value="pie" checked="checked" />
+	       	<label for="admin-chart-1">Pie</label>
+
+	       	<input type="radio" name="admin-chart-choice" id="admin-chart-2" value="bar" />
+	       	<label for="admin-chart-2">Bar</label>
+		    </fieldset>
+	    </div>
+
+			<div id="admin-chart-container">
+			</div>
+		</div>
+		<!-- END Stats for Admins END -->
 	</div>
 </div>
 

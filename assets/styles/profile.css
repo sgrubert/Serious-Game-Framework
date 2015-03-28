@@ -60,7 +60,7 @@ span.badge-awarded {
 
 
 /* StatisticsContainer */
-div#stats {
+div.stats {
   width: 840px;
   margin: auto;
   margin-top: 25px;
@@ -68,20 +68,25 @@ div#stats {
   line-height: 24px;
 }
 
-div#stats div.ui-field-contain {
+div.stats div.ui-field-contain {
   margin-left: 25px;
   margin-bottom: 0px;
   margin-top: 20px;
 }
 
-div#stats label {
+div.stats label {
   margin-right: 20px;
 }
 
-div#stats-header {
+div.stats-header {
   text-align: center;
   font-size: 32px;
   margin-top: 20px;
+}
+
+/* GameDesigner */
+div.stats#game-designer, div.stats#admin {
+  display: none;
 }
 
 
