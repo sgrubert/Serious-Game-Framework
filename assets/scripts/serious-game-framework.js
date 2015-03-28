@@ -1432,8 +1432,9 @@ drawChart = function(stats, type) {
 		data.addColumn('number', '#');
 		data.addRows([
 		  ['Correct', stats.correct],
-		  ['Wrong', stats.wrong],
-		  ['Show Me', stats.show_me]
+		  ['Wrong', stats.wrong]
+		  // Don't use show me in graphs
+		  // ['Show Me', stats.show_me]
 		]);
 
 		// Set chart options
@@ -1460,9 +1461,10 @@ drawChart = function(stats, type) {
 		chart.draw(data, options);
 	}
 	else if(chart_type == "bar") {
+		console.log("")
 		var data = google.visualization.arrayToDataTable([
-		  ['Result', 'Correct', 'Wrong', 'Show Me' ],
-		  ['Test', stats.correct, stats.wrong, stats.show_me]
+		  ['Result', 'Correct', 'Wrong'], // 'Show Me'
+		  [GAMESDATA[stats.target_game].name, stats.correct, stats.wrong] // stats.show_me
 		]);
 
 		var options = {
