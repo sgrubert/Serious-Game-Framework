@@ -29,6 +29,9 @@ var CURRENTLEVEL = -1;
 var SELECTEDITEMS = [];
 var GAMESTATE = "leveldone";
 
+// TODO MARKO add real oidc_userinfo
+var oidc_userinfo = {name: "Marko Kajzer", preferred_username: "marko.kajzer", email: "marko.kajzer@hotmail.de"};
+
 var badge_asserter = new BadgeAsserter();
 var gleaner_tracker = new GleanerTracker();
 
@@ -76,8 +79,7 @@ $(document).ready(function() {
 		loadGame(GAMEID);
 
 		// Send trace for starting a game
-		// TODO MARKO add real oidc_userinfo
-		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "game_start",
+		gleaner_tracker.trackTrace(oidc_userinfo, "game_start",
 															{gameID: GAMEID});
 	});
 
@@ -87,8 +89,7 @@ $(document).ready(function() {
 
 	$('#elearning').click(function() {
 		// Send trace for clicking an eLearning link
-		// TODO MARKO add real oidc_userinfo
-		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "elearning",
+		gleaner_tracker.trackTrace(oidc_userinfo, "elearning",
 															{gameID: GAMEID, levelID: CURRENTLEVEL});
 	});
 
@@ -108,8 +109,7 @@ $(document).ready(function() {
 		showMe();
 
 		// Send trace for using the show_me button
-		// TODO MARKO add real oidc_userinfo
-		gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
+		gleaner_tracker.trackTrace(oidc_userinfo, "level_completion",
 															{gameID: GAMEID, levelID: CURRENTLEVEL, result: "show_me"});
 	});
 
@@ -1065,9 +1065,8 @@ $(document).ready(function() {
 							$('#level-verification-wrong').show();
 
 							// Send traces with result = "wrong", do not track in Tutorial
-							// TODO MARKO replace with real user_info
 							if(!TUTORIAL) {
-								gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
+								gleaner_tracker.trackTrace(oidc_userinfo, "level_completion",
 																					{gameID: GAMEID, levelID: CURRENTLEVEL, result: "wrong"});
 							}
 						} else {
@@ -1076,9 +1075,8 @@ $(document).ready(function() {
 							$('#level-verification-correct').show();
 
 							// Send traces with result = "correct", do not track in Tutorial
-							// TODO MARKO replace with real user_info
 							if(!TUTORIAL) {
-								gleaner_tracker.trackTrace({email: "marko.kajzer@hotmail.de"}, "level_completion",
+								gleaner_tracker.trackTrace(oidc_userinfo, "level_completion",
 																				{gameID: GAMEID, levelID: CURRENTLEVEL, result: "correct"});
 							}
 						}
@@ -1124,8 +1122,7 @@ $(document).ready(function() {
 							// here all levels have been completed -> award badge of this game
 							var game_name = GAMESDATA[GAMEID].name.toLowerCase();
 							// console.log(game_name);
-							// TODO MARKO add real oidc_userinfo
-							this.badge_asserter.assertBadge(game_name, {name: "Marko Kajzer", email: "marko.kajzer@hotmail.de"}, "");
+							this.badge_asserter.assertBadge(game_name, oidc_userinfo, "");
 						}
 						else
 						{
@@ -1294,8 +1291,7 @@ $(document).ready(function() {
 
 startTracking = function() {
 	// Send request to initialize first gameplay, which also sends a trace for starting a session
-	// TODO MARKO add real_oidc_userinfo
-	gleaner_tracker.startTracking({email: "marko.kajzer@hotmail.de"});
+	gleaner_tracker.startTracking(oidc_userinfo);
 }
 
 showProfile = function() {
@@ -1327,7 +1323,7 @@ insertBadges = function() {
 	  url: "http://localhost:3000/collect/profiles", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
-      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+      'Email': oidc_userinfo.email
     },
     success: function(result) {
     	for(var i = 0; i < result.earnedBadges.length; i++) {
@@ -1350,7 +1346,7 @@ insertHighScores = function() {
 	  url: "http://localhost:3000/collect/highscore/", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
-      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+      'Email': oidc_userinfo.email
     },
     success: function(result) {
     	// If everything went ok, write results
@@ -1379,7 +1375,7 @@ insertStatistics = function() {
 		}
 	});
 
-	// TODO MARKO Remove this testgame
+	// TODO MARKO Remove this testgame, which is for showcasing only
 	$('#stats-game-select').append('<option value="2">Test Game 2</option>');
 
 	// Query statistics for Hormones game
@@ -1387,7 +1383,7 @@ insertStatistics = function() {
 	  url: "http://localhost:3000/collect/traces/1", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
-      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+      'Email': oidc_userinfo.email
     },
     success: function(result) {
     	// If everything went ok, draw the chart
@@ -1426,7 +1422,7 @@ drawChart = function(stats, type) {
     	$('ul#level' + i).append(tile);
     }
 	} else {
-	  $('div#worst-levels').append('<span>Congratulations! You have studied exceptionally well!</span>');
+	  $('div#worst-levels').append('<span>Congratulations! You have studied exceptionally well! (or not at all...)</span>');
 	}
 
 	if(chart_type == "pie") {
@@ -1495,7 +1491,7 @@ changeChart = function(gameID, type) {
 	  url: "http://localhost:3000/collect/traces/" + gameID, // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
-      'Email': 'marko.kajzer@hotmail.de' // TODO MARKO add real email
+      'Email': oidc_userinfo.email
     },
     success: function(result) {
     	// If everything went ok, draw the chart
