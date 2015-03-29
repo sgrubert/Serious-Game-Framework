@@ -374,45 +374,15 @@ $(document).ready(function() {
 				
 			}
 		});
-		
-		//intro.setOptions({
-        //    steps: [
-        //      {
-        //        element: '#step1',
-        //        intro: "This is a <b>bold</b> tooltip."
-        //      },
-        //      {
-        //        element: '#step2',
-        //        intro: "Ok, <i>wasn't</i> that fun?",
-        //        position: 'right'
-        //      },
-        //      {
-        //        element: '#step3',
-        //        intro: 'More features, more <span style="color: red;">f</span><span style="color: green;">u</span><span style="color: blue;">n</span>.',
-        //        position: 'left'
-        //      },
-        //      {
-        //        element: '#step4',
-        //        intro: "<span style='font-family: Tahoma'>Another step with new font!</span>",
-        //        position: 'bottom'
-        //      },
-        //      {
-        //        element: '#step5',
-        //        intro: '<strong>Get</strong> it, <strong>use</strong> it.'
-        //      }
-        //    ]
-        //  });
-		
 	}
-	
-	
+
 	function initializeLevelState() {
 		NEXTLEVELS = [];
 		LEVELSDONE = [];
 		CURRENTLEVEL = -1;
 		GAMESTATE = "leveldone";
 	}
-	
+
 	function clearGameboard() {
 		unblockAllSlots();
 		for (var i = 0; i <= 3; i++) {
@@ -422,7 +392,7 @@ $(document).ready(function() {
 			}(piece);
 		}
 	}
-	
+
 	function clearGalleries() {
 		for (var i=0; i <= 3; i++) {
 			var clear = function(j) {
@@ -430,16 +400,14 @@ $(document).ready(function() {
 			}(i);
 		}
 	}
-	
-		
-	/** 
+
+	/**
 	  * Fills the four galleries with data
 	  * @param gameID The ID of the current game.
 	  */
 	function loadGaleries( gameID ) {
 		var pieceCounter = new Array();
-		
-		
+
 		$.each(LEVELDATA, function(i, data) {
 			// i: levelID
 			// data: level data
@@ -452,12 +420,12 @@ $(document).ready(function() {
 						if (pieceCounter[p]) {
 							pieceCounter[p]++;
 							$('img[piece-id=' + p + ']', '#gallery' + j + ' ul').attr('piece-count',pieceCounter[p]);
-							
+
 						} else {
 							//if some nice lightbox plugin is found: var image1 = $('<li class="ui-widget-content ui-corner-tr piece"><a href="' + UPLOADPATH + PIECESDATA[p].src + '" title="' + PIECESDATA[p].description + '"><img src="' + UPLOADPATH + PIECESDATA[p].src + '" alt="' + PIECESDATA[p].description + '" width="96" height="72" piece-id="' + p + '" piece-count="1" /></a></li>');
-							
+
 							var image1 = $('<li class="ui-widget-content ui-corner-tr piece" draggable="true"><img src="' + UPLOADPATH + PIECESDATA[p].src + '" alt="' + PIECESDATA[p].description + '" width="94" height="68" piece-id="' + p + '" piece-count="1" /></li>');
-							
+
 							rand(0,1) ? $('#gallery' + j + ' ul').prepend(image1) : $('#gallery' + j + ' ul').append(image1);
 							pieceCounter[p] = 1;
 						}
@@ -467,13 +435,13 @@ $(document).ready(function() {
 		} );
 		setGalleryWidth();
 	}
-	
+
 	function setGalleryWidth() {
 		GALLERY3ul.width((102 * GALLERY3ul.children().length));
 		GALLERY1ul.width((102 * GALLERY1ul.children().length));
 	}
-	
-	/** 
+
+	/**
 	  * Returns a random number in the interval [min,max]
 	  * @param min Minimum value of the interval.
 	  * @param max Maximum value of the interval.
@@ -486,8 +454,7 @@ $(document).ready(function() {
 			return min;
 		}
 	}
-	
-	
+
 	function initializeDragDrop() {
 		makeGalleriesDraggable();
 		makeSlotsDroppable();
