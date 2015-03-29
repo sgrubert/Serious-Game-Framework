@@ -32,12 +32,21 @@ var GAMESTATE = "leveldone";
 // TODO MARKO add real oidc_userinfo
 var oidc_userinfo = {name: "Marko Kajzer", preferred_username: "marko.kajzer", email: "marko.kajzer@hotmail.de"};
 
+var correct = 0;
+var wrong = 0;
+var elearning = 0;
+
 var badge_asserter = new BadgeAsserter();
 var gleaner_tracker = new GleanerTracker();
 var chart_creator = new ChartCreator();
 
 // When DOM is loaded do the following
 $(document).ready(function() {
+	// TODO MARKO Session Summary
+	window.onbeforeunload = function() {
+	    console.log("Session Summary: " + correct + " / " + (correct + wrong) + " correct answers!");
+	}
+
 	setGalleryHeight();
 
 	$(window).resize(function() {
@@ -89,6 +98,7 @@ $(document).ready(function() {
 	});
 
 	$('#elearning').click(function() {
+		elearning++;
 		// Send trace for clicking an eLearning link
 		gleaner_tracker.trackTrace(oidc_userinfo, "elearning",
 															{gameID: GAMEID, levelID: CURRENTLEVEL});
@@ -1091,6 +1101,7 @@ $(document).ready(function() {
 
 							// Send traces with result = "wrong", do not track in Tutorial
 							if(!TUTORIAL) {
+								wrong++;
 								gleaner_tracker.trackTrace(oidc_userinfo, "level_completion",
 																					{gameID: GAMEID, levelID: CURRENTLEVEL, result: "wrong"});
 							}
@@ -1101,6 +1112,7 @@ $(document).ready(function() {
 
 							// Send traces with result = "correct", do not track in Tutorial
 							if(!TUTORIAL) {
+								correct++;
 								gleaner_tracker.trackTrace(oidc_userinfo, "level_completion",
 																				{gameID: GAMEID, levelID: CURRENTLEVEL, result: "correct"});
 							}
@@ -1433,7 +1445,6 @@ insertPlayerStatistics = function() {
 }
 
 insertGameDesignerStatistics = function(designed_games) {
-	console.log(designed_games);
 	if(designed_games.length > 0) {
 		$('div.stats#game-designer').show();
 	}
