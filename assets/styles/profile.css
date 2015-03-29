@@ -61,7 +61,7 @@ img#experience-badge {
 
 div#experience-data {
   margin-left: 200px;
-  padding-top: 30px;
+  padding-top: 20px;
   text-align: center;
 }
 
@@ -80,7 +80,7 @@ div.ui-progressbar-value {
 }
 
 div#experience-tags, div#experience-info {
-  padding: 0px 35px;
+  padding: 7px 35px;
 }
 
 
