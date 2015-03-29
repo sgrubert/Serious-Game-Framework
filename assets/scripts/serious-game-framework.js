@@ -1371,10 +1371,10 @@ showProfile = function() {
     }
 	});
 
-	// Insert HighScores
+	insertExperience();
+
 	insertHighScores();
 
-	// Insert Statistics
 	insertPlayerStatistics();
 }
 
@@ -1386,6 +1386,35 @@ insertBadges = function(profile) {
 			'</span>');
 		$('div#badges-container').append(badge);
 	}
+}
+
+insertExperience = function() {
+		// Query experience
+		$.ajax({
+		  url: "http://localhost:3000/collect/experience", // TODO MARKO add real url
+		  dataType: "json",
+		  headers: {
+	      'Email': oidc_userinfo.email
+	    },
+	    success: function(result) {
+	    	// Insert experience progress bar
+	    	$('#experience-badge').attr("src","assets/images/experience/level" + result.level + ".png");
+
+	    	$('#level-name').text("Level " + result.level + " - " + result.level_name);
+
+  	    $("#progressbar").progressbar({
+  	      value: result.level_progress
+  	    });
+  	    $('.progress-label').text(result.level_progress + "%");
+
+  	    $('#total-exp').text(result.total_experience);
+  	    $('#level-exp').text(result.level_experience);
+  	    $('#exp-to-next').text(result.to_next_level);
+	    },
+	    error: function() {
+	    	console.log("Can't get experience. Server down?");
+	    }
+		});
 }
 
 insertHighScores = function() {
