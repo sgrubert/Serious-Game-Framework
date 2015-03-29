@@ -1,3 +1,4 @@
+/* User Info */
 div#user-info {
   width: 840px;
   margin: auto;
@@ -6,11 +7,11 @@ div#user-info {
   text-align: center;
 }
 
-div#user_img, div#profile_tags, div#profile_info {
+div#user_img, div#profile_tags, div#profile_info, div#experience-tags, div#experience-info {
   display: inline-block;
 }
 
-div#profile_tags, div#profile_info {
+div#profile_tags, div#profile_info, div#experience-tags, div#experience-info {
   vertical-align: top;
   padding: 35px;
   text-align: left;
@@ -28,8 +29,9 @@ div#profile_info {
   padding-left: 20px;
 }
 
-/* BadgesContainer */
-div#earned-badges {
+
+/* All sections */
+div#experience, div#earned-badges, div#high-score, div.stats {
   width: 840px;
   margin: auto;
   margin-top: 25px;
@@ -37,12 +39,53 @@ div#earned-badges {
   line-height: 24px;
 }
 
-div#badges-header {
+/* All headers */
+div#experience-header, div#badges-header, div#score-header, div.stats-header {
   text-align: center;
   font-size: 32px;
-  margin: 20px 0px;
+  margin: 20px auto;
 }
 
+
+
+/* Experience */
+div#experience {
+  overflow: auto;
+}
+
+img#experience-badge {
+  float: left;
+  width: 200px;
+  margin: 10px;
+}
+
+div#experience-data {
+  margin-left: 200px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+div#progressbar {
+  height: 32px;
+  margin: 15px 40px;
+}
+.progress-label {
+  position: absolute;
+  left: 50%;
+  top: 4px !important;
+  font-weight: bold;
+}
+div.ui-progressbar-value {
+  background: rgb(83, 135, 197);
+}
+
+div#experience-tags, div#experience-info {
+  padding: 0px 35px;
+}
+
+
+
+/* BadgesContainer */
 span.badge-img {
   margin: 0px 32px;
 }
@@ -60,14 +103,6 @@ span.badge-awarded {
 
 
 /* StatisticsContainer */
-div.stats {
-  width: 840px;
-  margin: auto;
-  margin-top: 25px;
-  font-size: 18px;
-  line-height: 24px;
-}
-
 div.stats div.ui-field-contain {
   margin-left: 25px;
   margin-bottom: 0px;
@@ -78,18 +113,10 @@ div.stats label {
   margin-right: 20px;
 }
 
-div.stats-header {
-  text-align: center;
-  font-size: 32px;
-  margin-top: 20px;
-}
-
 /* GameDesigner */
 div.stats#game-designer, div.stats#admin {
   display: none;
 }
-
-
 
 /* Worst Levels */
 div#player-worst-levels, div#designer-worst-levels {
@@ -129,20 +156,6 @@ div#player-worst-levels ul li img, div#designer-worst-levels ul li img {
 
 
 /* HighScoresContainer */
-div#high-score {
-  width: 840px;
-  margin: auto;
-  margin-top: 25px;
-  font-size: 18px;
-  line-height: 24px;
-}
-
-div#score-header {
-  text-align: center;
-  font-size: 32px;
-  margin: 20px auto;
-}
-
 .ui-table-columntoggle-btn {
     display: none !important;
 }
