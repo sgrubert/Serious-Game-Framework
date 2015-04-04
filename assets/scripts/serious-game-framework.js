@@ -42,9 +42,9 @@ var chart_creator = new ChartCreator();
 
 // When DOM is loaded do the following
 $(document).ready(function() {
-	// TODO MARKO Session Summary
+	// TODO MARKO Session Summary ALERT instead of LOG
 	window.onbeforeunload = function() {
-	    console.log("Session Summary: " + correct + " / " + (correct + wrong) + " correct answers!");
+	  console.log("Session Summary: " + correct + " / " + (correct + wrong) + " correct answers!");
 	}
 
 	setGalleryHeight();
