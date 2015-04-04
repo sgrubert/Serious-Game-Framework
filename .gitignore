@@ -4,4 +4,5 @@ cache.manifest.php
 lib/gleaner-frontend/app/public/bower/
 lib/gleaner-frontend/node_modules/*
 !lib/gleaner-frontend/node_modules/gleaner-data
+lib/gleaner-frontend/node_modules/gleaner-data/node_modules/
 
