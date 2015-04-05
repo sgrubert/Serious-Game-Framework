@@ -37,7 +37,7 @@ creation of the games in the context of dragging and dropping tiles into predete
 slots. We started in the context of Medical Education, however the basic concepts of the
 game could be applied to any topic given the proper tiles and connections.
 
-##### Learning analytics
+#### Learning analytics
 
 After a user has designed a game, he can view statistics to these games on his profile. At
 the current point of time, statistics can be viewed in pie and bar charts, whereas the
@@ -59,7 +59,7 @@ is logged in each completed level will save one record to the database along wit
 result: *correct* or *wrong*. The player can then access these statistics and more via his
 profile page, which is only available if the user is logged in.
 
-##### Learning analytics
+#### Learning analytics
 
 A player can view his saved statistics via the Profile tab on the main page. Statistics
 are shown per game, so if a player has participated in two games he can set the viewed
@@ -68,28 +68,30 @@ toggled between the Pie chart and a Bar chart view. Additionally, the top ten (a
 worst levels are shown to the player to reveal learning deficits. A worst level is
 determined by more than 50% wrong answers with more than one answer in total.
 
-###### Session Summary
+##### Session Summary
 
 Throughout one's session the statistics are also saved. So when a player wants to close
 the application window an alert will pop up to show the number of correct and wrong
 answers for this play session.
 
-##### Motivation
+#### Motivation
 
 We have added multiple mechanisms to keep players motivated.
 
-###### Highscore
+##### Highscore
 
 The highscore is determined by the user's correct and wrong answers; a correct answer will
 net the player 5 points whereas a wrong answer will subtract 2 points from the highscore.
 
 In addition, a player will see the next two (at most) players above him to have an
 additional motivation, and the two (at most) players beneath him, to see what other
-players have achieved. To keep the Highscore ladder anonymous (as the players should could
-know each other from the actual lectures) only the name of the player looking at his
-profile will be shown. The other positions will be shown as (from top to bottom): _"Your next Challenge"_, _"Your next Milestone"_, _"You've beaten this guy"_, _"...and this guy"_.
+players have achieved. To keep the Highscore ladder anonymous (as the players should
+could know each other from the actual lectures) only the name of the player looking at his
+profile will be shown. The other positions will be shown as (from top to bottom): _"Your
+next Challenge"_, _"Your next Milestone"_, _"You've beaten this guy"_, _"...and this
+guy"_.
 
-###### Badges
+##### Badges
 
 Certain actions can award the player with a Badge. At the moment these actions include:
 
@@ -102,12 +104,12 @@ Certain actions can award the player with a Badge. At the moment these actions i
 
 Upon achieving a badge for the first time a sound will be played to support the player's
 accomplishment. In addition, the user has the possibility to add the Badge to his Mozilla
-Backpack as we are using the OpenBadges. However, the process of pushing the badge to the
-backpack is only activated once, namely after earning a badge for the first time.
+Backpack as we are using the OpenBadges. However, the process of pushing the badge to
+the backpack is only activated once, namely after earning a badge for the first time.
 Nevertheless, badges can be _earned_ multiple times, with the exact number appearing next
 to the badge on the profile.
 
-###### Experience
+##### Experience
 
 In addition to the badge system, we have added an experience system to the application.
 Through his actions each user can earn experience points. The experience is made up as
@@ -121,7 +123,7 @@ follows:
 + 1 point per elearning link clicked
 + 0.5 points per login
 
-With his experience a player can rise in his experience level: Each user starts as a _Total Noob_ at level 0, and climbs from _Beginner_ over _Experienced Elearner_, _Professional_ and _Expert_ to _Master_. Each level requires more and more experience points and therefore more and more actions from the user. It starts with 100 points to reach Level 1, and then 150 additional points for the next, then 250, then 500 and finally 1000 points for Level 5 _Master_. Each level is accompanied by an image which gets more and more impressive as the user climbs in level. Additionally an experience bar indicating the users progress can be found on his profile.
+With his experience a player can rise in his experience level: Each user starts as a **Total Noob** at level 0, and climbs from **Beginner** over **Experienced Elearner**, **Professional** and **Expert** to **Master**. Each level requires more and more experience points and therefore more and more actions from the user. It starts with 100 points to reach Level 1, and then 150 additional points for the next, then 250, then 500 and finally 1000 points for Level 5 **Master**. Each level is accompanied by an image which gets more and more impressive as the user climbs in level. Additionally an experience bar indicating the users progress can be found on his profile.
 
 #### Administrator
 
