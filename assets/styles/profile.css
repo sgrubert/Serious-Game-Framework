@@ -119,7 +119,7 @@ div.stats#game-designer, div.stats#admin {
 }
 
 /* Worst Levels */
-div#player-worst-levels, div#designer-worst-levels {
+div#player-worst-levels, div#designer-worst-levels, div#player-no-records, div#designer-no-records {
   padding: 20px;
   margin-top: 20px;
   text-align: center;
