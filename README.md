@@ -12,10 +12,10 @@ experience in the context of the new medium internet.
 
 The application consists of three components:
 
-The Serious Game Framework frontend to create and play games, as well as view your own
+The Serious Game Framework frontend to create and play games, as well as to view your own
 profile as a player, game designer or administrator.
 
-The second components is a heavily modified version of [GLEANER: Game LEarning ANalytics for Educational Research](http://e-ucm.github.io/gleaner/) created by [Ángel Serrano-Laguna](https://github.com/anserran/gleaner-frontend) and maintained by the [e-ucm eLearning group](http://www.e-ucm.es/). GLEANER provides as with an interface to interact with an underlying MongoDB.
+The second component is a heavily modified version of [GLEANER: Game LEarning ANalytics for Educational Research](http://e-ucm.github.io/gleaner/) created by [Ángel Serrano-Laguna](https://github.com/anserran/gleaner-frontend) and maintained by the [e-ucm eLearning group](http://www.e-ucm.es/). GLEANER provides us with an interface to interact with an underlying MongoDB.
 
 As we award certain user actions with badges, we make use of [OpenBadges](http://openbadges.org/) to allow players to push their earned badges to their OpenBadges Backpack.
 
@@ -39,8 +39,8 @@ game could be applied to any topic given the proper tiles and connections.
 
 ##### Learning analytics
 
-After a user has designed a game, he can view statistics to these game on his profile. At
-the current point of time statistics can be viewed in Pie and Bar charts, whereas the
+After a user has designed a game, he can view statistics to these games on his profile. At
+the current point of time, statistics can be viewed in pie and bar charts, whereas the
 created game can be selected through a dropdown menu. In addition, if some levels were
 solved exceptionally bad (more than 50% wrong answers with more than one answer total),
 the designer will see a notice on the profile of up to the 10 worst levels. The gives the
@@ -64,9 +64,9 @@ profile page, which is only available if the user is logged in.
 A player can view his saved statistics via the Profile tab on the main page. Statistics
 are shown per game, so if a player has participated in two games he can set the viewed
 game via a Dropdown menu. The statistics are shown in a Pie chart by default and can be
-toggle between this and a Bar chart. Additionally, the top ten (at most) worst levels are
-shown to the player to reveal learning deficits. A worst level is determined by more than
-50% wrong answers with more than one answer in total.
+toggled between the Pie chart and a Bar chart view. Additionally, the top ten (at most)
+worst levels are shown to the player to reveal learning deficits. A worst level is
+determined by more than 50% wrong answers with more than one answer in total.
 
 ###### Session Summary
 
@@ -143,9 +143,9 @@ see how the application is used.
 + Navigate to localhost:3000, where the node application was started
     + Create a new Game
     + Create a new Version for this game
-+ Copy Tracking Code to _Serious-Game-Framework/lib/gleaner-tracker.js_
++ Copy the Tracking Code to _Serious-Game-Framework/lib/gleaner-tracker.js_
     + The code line is high up in the file, a comment will mark the correct line
-+ Copy first 24 characters of Tracking Code to _gleaner\_data/lib/traces\_.js_
++ Copy the first 24 characters of Tracking Code to _gleaner\_data/lib/traces\_.js_
     + A comment will mark the correct line
 + After changing the configuration, restart the gleaner-frontend server
     + ```CTRL+C``` to terminate the server, ```node app/app.js``` to restart
@@ -158,6 +158,7 @@ The main files of this project are the _serious\_game\_framework.js_, which cont
 
 We are looking to...
 
++ finish the game designer view to allow educators to create and publish games
 + add an optional division per day for all statistics.
 + add more usage statistics for administrators.
 + add a possibility to re-add badges to the Mozilla Backpack.
