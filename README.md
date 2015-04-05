@@ -4,6 +4,26 @@ Serious Game Framework
 A framework targeted at university professors and other educators to create simple Serious
 Games and let them be played by their students and pupils.
 
+## Table of Contents
+- [Features](#)
+    - [Game](#)
+    - [Roles](#)
+        - [Game designers](#)
+            - [Learning analytics](#)
+        - [Players](#)
+            - [Learning analytics](#)
+                - [Session Summary](#)
+            - [Motivation](#)
+                - [Highscore](#)
+                - [Badges](#)
+                - [Experience](#)
+        - [Administrator](#)
+- [Installation guide](#)
+- [Development](#)
+- [Planned Features](#)
+- [Contributors](#)
+- [License](#)
+
 ## Features
 
 We want to give educators the possibility to create Serious Games including course
@@ -12,14 +32,14 @@ experience in the context of the new medium internet.
 
 The application consists of three components:
 
-The Serious Game Framework frontend to create and play games, as well as to view your own
-profile as a player, game designer or administrator.
+The Serious Game Framework frontend to create and play games, as well as to view your
+own profile as a player, game designer or administrator.
 
 The second component is a heavily modified version of [GLEANER: Game LEarning ANalytics for Educational Research](http://e-ucm.github.io/gleaner/) created by [Ángel Serrano-Laguna](https://github.com/anserran/gleaner-frontend) and maintained by the [e-ucm eLearning group](http://www.e-ucm.es/). GLEANER provides us with an interface to interact with an underlying MongoDB.
 
 As we award certain user actions with badges, we make use of [OpenBadges](http://openbadges.org/) to allow players to push their earned badges to their OpenBadges Backpack.
 
-### Game
+## Game
 
 The concept of the games is rather simple. When entering a game, the player will find four
 galleries, each filled with tiles containing a keyword of the game's topic. The player has
@@ -28,9 +48,9 @@ screen. Tiles can only be put into their predetermined slot. Upon entering a til
 each slot it is revealed to the player if his answer was correct or not. The inserted
 tiles are then discarded and the user can continue with the rest of the tiles.
 
-### Roles
+## Roles
 
-#### Game designers
+### Game designers
 
 Even though not feature complete, we plan to give game designers full control over the
 creation of the games in the context of dragging and dropping tiles into predetermined
@@ -50,7 +70,7 @@ require more attention in class.
 As the feature of creating games has not been completed as off yet, the corresponding tab
 on the profile page is for demonstration purposes only.
 
-#### Players
+### Players
 
 A user can login via the OpenID Connect button on the top left of the main page. This leads the user to the [Learning Layers OIDC page](https://api.learning-layers.eu/o/oauth2/login). From here a user can either login or create a new account.
 
@@ -125,7 +145,7 @@ follows:
 
 With his experience a player can rise in his experience level: Each user starts as a **Total Noob** at level 0, and climbs from **Beginner** over **Experienced Elearner**, **Professional** and **Expert** to **Master**. Each level requires more and more experience points and therefore more and more actions from the user. It starts with 100 points to reach Level 1, and then 150 additional points for the next, then 250, then 500 and finally 1000 points for Level 5 **Master**. Each level is accompanied by an image which gets more and more impressive as the user climbs in level. Additionally an experience bar indicating the users progress can be found on his profile.
 
-#### Administrator
+### Administrator
 
 An administrator (for example a developer) has access to all statistics of all games to
 see how the application is used.
