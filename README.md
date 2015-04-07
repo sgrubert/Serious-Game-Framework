@@ -160,6 +160,7 @@ see how the application is used.
     + Install dependencies with ```npm install```
     + Make sure that the _node\_modules_ as well as _bower\_components_ are installed
 + [Create new user in gleaner-frontend ```node bin/install <username\> <password\>```]
++ Start the MongoDB server with ```mongod```
 + Start gleaner-frontend with ```node app/app.js```
 + [Login]
 + Navigate to localhost:3000, where the node application was started
