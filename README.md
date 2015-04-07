@@ -201,7 +201,7 @@ Special thanks to the team behind [GLEANER](http://e-ucm.github.io/gleaner/).
 
 Copyright (c) 2014 Simon Grubert & Marko Kajzer, Advanced Community Information
 Systems (ACIS) Group, Chair of Computer Science 5 (Databases & Information Systems),
-RWTH Aachen University, Germany All rights reserved.
+RWTH Aachen University, Germany. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
 permitted provided that the following conditions are met:
