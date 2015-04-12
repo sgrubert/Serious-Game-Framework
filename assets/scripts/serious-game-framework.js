@@ -44,7 +44,9 @@ var chart_creator = new ChartCreator();
 $(document).ready(function() {
 	// TODO MARKO Session Summary ALERT instead of LOG
 	window.onbeforeunload = function() {
-	  console.log("Session Summary: " + correct + " / " + (correct + wrong) + " correct answers!");
+	  return "Session Summary: \n" +
+	  	"You had " + correct + " / " + (correct + wrong) + " correct answers \n" +
+	  	"and have read " + elearning + " articles!";
 	}
 
 	setGalleryHeight();
