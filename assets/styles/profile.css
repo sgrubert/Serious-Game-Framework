@@ -21,6 +21,10 @@ div#user_img {
   margin: 5px;
 }
 
+div#profile_tags, div#profile_info {
+  margin-top: 15px;
+}
+
 div#profile_tags {
   margin-left: 40px;
 }
