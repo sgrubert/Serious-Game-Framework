@@ -286,7 +286,7 @@ $(document).ready(function() {
 			//alert(i + " - " + data.name);
 			//var game = $('<a class="ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-right ui-btn-up-c" game-id="' + i + '" data-transition="slide" data-iconpos="right" data-icon="arrow-r" data-role="button" href="#game" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c">' + data.name + '</a>');
 
-			var game = $('<li><a href="#game" game-id="' + i + '" class="gamelink"><h3>' + data.name + '</h3><p>' + data.description + '</p></a></li>');
+			var game = $('<li><a href="#game" id="game-id-'+ i + '" game-id="' + i + '" class="gamelink"><h3>' + data.name + '</h3><p>' + data.description + '</p></a></li>');
 			$('.gameslist').append(game);
 		});
 		$('.gameslist').listview('refresh');
@@ -426,7 +426,7 @@ $(document).ready(function() {
 						} else {
 							//if some nice lightbox plugin is found: var image1 = $('<li class="ui-widget-content ui-corner-tr piece"><a href="' + UPLOADPATH + PIECESDATA[p].src + '" title="' + PIECESDATA[p].description + '"><img src="' + UPLOADPATH + PIECESDATA[p].src + '" alt="' + PIECESDATA[p].description + '" width="96" height="72" piece-id="' + p + '" piece-count="1" /></a></li>');
 
-							var image1 = $('<li class="ui-widget-content ui-corner-tr piece" draggable="true"><img src="' + UPLOADPATH + PIECESDATA[p].src + '" alt="' + PIECESDATA[p].description + '" width="94" height="68" piece-id="' + p + '" piece-count="1" /></li>');
+							var image1 = $('<li class="ui-widget-content ui-corner-tr piece" draggable="true"><img src="' + UPLOADPATH + PIECESDATA[p].src + '" alt="' + PIECESDATA[p].description + '" width="94" height="68" id="piece-id-'+p+'" piece-id="' + p + '" piece-count="1" /></li>');
 
 							rand(0,1) ? $('#gallery' + j + ' ul').prepend(image1) : $('#gallery' + j + ' ul').append(image1);
 							pieceCounter[p] = 1;
