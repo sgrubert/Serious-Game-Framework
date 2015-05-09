@@ -155,11 +155,12 @@ see how the application is used.
 + Install NodeJS
     + We recommend running v0.10.30, as there are often compatibility problems with
       node_modules.
+    + The module `easy-collections` depends on this version of Node.
 + Install MongoDB
 + Go to folder gleaner-frontend within lib folder
     + Install dependencies with ```npm install```
     + Make sure that the _node\_modules_ as well as _bower\_components_ are installed
-+ [Create new user in gleaner-frontend ```node bin/install <username\> <password\>```]
++ [Create new user in gleaner-frontend ```node bin/install <username> <password>```]
 + Start the MongoDB server with ```mongod```
 + Start gleaner-frontend with ```node app/app.js```
 + [Login]
@@ -172,6 +173,23 @@ see how the application is used.
     + A comment will mark the correct line
 + After changing the configuration, restart the gleaner-frontend server
     + ```CTRL+C``` to terminate the server, ```node app/app.js``` to restart
++ If you want to deploy the code on real server and not work on localhost, you have to point the application to the correct URL. Replace occurrences of ```localhost:3000``` within the code with your real address.
+    + 2 occurrences in ```badge_asserter.js```
+    + 1 occurrence in ```chart-creator.js```
+    + 3 occurrences in ```gleaner-tracker.js```
+    + 6 occurrences in ````serious-game-framework.js```
+
+## Tests
+
+For testing purposes we use Selenium and NightwatchJS. To execute the tests you need to do the following:
+
++ Install ```selenium-standalone``` server and NightwatchJS.
++ Start the selenium server with ```selenium-standalone start```
++ In your terminal, go to the root of the project and execute all tests with the ```nightwatch``` command.
+    + To execute single tests ```nightwatch --test <filename> --testcase "<testcase>"```
+        + e.g. ```nightwatch --test tests/selenium-tests.js --testcase "PlayFixedGame"```
+    + The standard browser for the tests is Chrome. However, we configured the tests to be runnable in Firefox as well. Use the command ```nightwatch --env firefox``` to start a Firefox instance.
+        + You can configure other browsers by adding them to the ```nightwatch.json``` file.
 
 ## Development
 
