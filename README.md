@@ -174,10 +174,10 @@ see how the application is used.
 + After changing the configuration, restart the gleaner-frontend server
     + ```CTRL+C``` to terminate the server, ```node app/app.js``` to restart
 + If you want to deploy the code on real server and not work on localhost, you have to point the application to the correct URL. Replace occurrences of ```localhost:3000``` within the code with your real address.
-    + 2 occurrences in ```badge_asserter.js```
+    + 1 occurrence in ```badge_asserter.js``` (variable ```gleaner_frontend_host```)
     + 1 occurrence in ```chart-creator.js```
-    + 3 occurrences in ```gleaner-tracker.js```
-    + 6 occurrences in ````serious-game-framework.js```
+    + 1 occurrence in ```gleaner-tracker.js``` (variable ```gleaner_path```)
+    + 1 occurrence in ```serious-game-framework.js``` (variable ```gleaner_url```)
 
 ## Tests
 
@@ -209,8 +209,8 @@ We are looking to...
 
 ## Contributors
 
-Simon Grubert, Serious Game Framework Base  
-[Marko Kajzer](mailto:marko.kajzer@rwth-aachen.de), Learning Analytics and Motivation  
+Simon Grubert, Serious Game Framework Base
+[Marko Kajzer](mailto:marko.kajzer@rwth-aachen.de), Learning Analytics and Motivation
 Marc Treiber, Badge Design and Realization
 
 Special thanks to the team behind [GLEANER](http://e-ucm.github.io/gleaner/).
