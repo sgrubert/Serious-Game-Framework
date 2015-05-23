@@ -31,6 +31,7 @@ var GAMESTATE = "leveldone";
 
 // TODO MARKO add real oidc_userinfo
 var oidc_userinfo = {name: "Marko Kajzer", preferred_username: "marko.kajzer", email: "marko.kajzer@hotmail.de"};
+var gleaner_url = "http://localhost:3000/"; // TODO ADD REAL LOCATION HERE
 
 var correct = 0;
 var wrong = 0;
@@ -1320,7 +1321,7 @@ showProfile = function() {
 
 	// Query profile
 	$.ajax({
-	  url: "http://localhost:3000/collect/profiles", // TODO MARKO add real url
+	  url: gleaner_url + "collect/profiles",
 	  dataType: "json",
 	  headers: {
       'Email': oidc_userinfo.email
@@ -1362,7 +1363,7 @@ insertBadges = function(profile) {
 insertExperience = function() {
 		// Query experience
 		$.ajax({
-		  url: "http://localhost:3000/collect/experience", // TODO MARKO add real url
+		  url: gleaner_url + "collect/experience",
 		  dataType: "json",
 		  headers: {
 	      'Email': oidc_userinfo.email
@@ -1391,7 +1392,7 @@ insertExperience = function() {
 insertHighScores = function() {
 	// Query HighScore Ladder for this user
 	$.ajax({
-	  url: "http://localhost:3000/collect/highscore/", // TODO MARKO add real url
+	  url: gleaner_url + "collect/highscore/", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
       'Email': oidc_userinfo.email
@@ -1428,7 +1429,7 @@ insertPlayerStatistics = function() {
 
 	// Query statistics for Hormones game
 	$.ajax({
-	  url: "http://localhost:3000/collect/traces/1", // TODO MARKO add real url
+	  url: gleaner_url + "collect/traces/1", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
       'Email': oidc_userinfo.email
@@ -1464,7 +1465,7 @@ insertGameDesignerStatistics = function(designed_games) {
 
 	// Query statistics for first game of this user
 	$.ajax({
-	  url: "http://localhost:3000/collect/traces/" + designed_games[0] + "?type=designer", // TODO MARKO add real url
+	  url: gleaner_url + "collect/traces/" + designed_games[0] + "?type=designer", // TODO MARKO add real url
 	  dataType: "json",
 	  headers: {
       'Email': oidc_userinfo.email
@@ -1495,7 +1496,7 @@ insertAdminStatistics = function() {
 
 	// Query statistics for Hormones game
 	$.ajax({
-	  url: "http://localhost:3000/collect/traces/1?type=admin", // TODO MARKO add real url
+	  url: gleaner_url + "collect/traces/1?type=admin",
 	  dataType: "json",
 	  headers: {
       'Email': oidc_userinfo.email
