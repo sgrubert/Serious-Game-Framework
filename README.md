@@ -209,9 +209,9 @@ We are looking to...
 
 ## Contributors
 
-Simon Grubert, Serious Game Framework Base
-[Marko Kajzer](mailto:marko.kajzer@rwth-aachen.de), Learning Analytics and Motivation
-Marc Treiber, Badge Design and Realization
+Simon Grubert, Serious Game Framework Base  
+[Marko Kajzer](mailto:marko.kajzer@rwth-aachen.de), Learning Analytics and Motivation  
+Marc Treiber, Badge Design and Realization  
 
 Special thanks to the team behind [GLEANER](http://e-ucm.github.io/gleaner/).
 
