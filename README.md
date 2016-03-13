@@ -168,7 +168,7 @@ see how the application is used.
     + Create a new Version for this game
 + Copy the Tracking Code to _Serious-Game-Framework/lib/gleaner-tracker.js_
     + The code line is high up in the file, a comment will mark the correct line
-+ Copy the first 24 characters of Tracking Code to gleaner_data/lib/traces.js
++ Copy the first 24 characters of Tracking Code to gleaner\_data/lib/traces\_.js
     + A comment will mark the correct line
 + After changing the configuration, restart the gleaner-frontend server
     + ```CTRL+C``` to terminate the server, ```node app/app.js``` to restart
