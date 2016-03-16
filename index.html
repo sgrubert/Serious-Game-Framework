@@ -4,6 +4,26 @@
 	<meta charset="utf-8">
 	<title>Serious Game Framework</title>
 
+  <!-- include jQuery and jQuery UI -->
+	<script src="assets/scripts/jquery-1.10.2.min.js"></script>
+
+  <script>
+    $(document).bind('mobileinit',function() {
+      $.mobile.pushStateEnabled = false;
+    });
+  </script>
+
+	<!-- <script src="js/jquery-2.0.2.min.js"></script> -->
+	<!-- <script src="jqueryui/ui/jquery.ui.position.min.js"></script> -->
+	<script src="assets/scripts/jqueryui/ui/jquery.ui.core.min.js"></script>
+	<script src="assets/scripts/jqueryui/ui/jquery.ui.widget.min.js"></script>
+	<script src="assets/scripts/jqueryui/ui/jquery.ui.mouse.min.js"></script>
+	<script src="assets/scripts/jqueryui/ui/jquery.ui.draggable.min.js"></script>
+	<script src="assets/scripts/jqueryui/ui/jquery.ui.droppable.min.js"></script>
+	<script src="assets/scripts/jqueryui/ui/jquery.ui.progressbar.min.js"></script>
+	<!-- <script src="jqueryui/ui/jquery.ui.resizable.min.js"></script> -->
+	<!-- <script src="jqueryui/ui/jquery.ui.dialog.min.js"></script> -->
+
 	<!-- Styles for intro,js Site Tour -->
 	<!-- <link href="styles/bootstrap.min.css" rel="stylesheet"> -->
     <!-- <link href="styles/intro.css" rel="stylesheet"> -->
@@ -23,19 +43,6 @@
 	<!-- include own stylesheet -->
 	<link rel="stylesheet" href="assets/styles/profile.css">
 	<link rel="stylesheet" href="assets/styles/style.css">
-
-	<!-- include jQuery and jQuery UI -->
-	<script src="assets/scripts/jquery-1.10.2.min.js"></script>
-	<!-- <script src="js/jquery-2.0.2.min.js"></script> -->
-	<!-- <script src="jqueryui/ui/jquery.ui.position.min.js"></script> -->
-	<script src="assets/scripts/jqueryui/ui/jquery.ui.core.min.js"></script>
-	<script src="assets/scripts/jqueryui/ui/jquery.ui.widget.min.js"></script>
-	<script src="assets/scripts/jqueryui/ui/jquery.ui.mouse.min.js"></script>
-	<script src="assets/scripts/jqueryui/ui/jquery.ui.draggable.min.js"></script>
-	<script src="assets/scripts/jqueryui/ui/jquery.ui.droppable.min.js"></script>
-	<script src="assets/scripts/jqueryui/ui/jquery.ui.progressbar.min.js"></script>
-	<!-- <script src="jqueryui/ui/jquery.ui.resizable.min.js"></script> -->
-	<!-- <script src="jqueryui/ui/jquery.ui.dialog.min.js"></script> -->
 
 	<!-- include jQuery Storage API by Julien Maurel -->
 	<!-- <script src="js/jquery.storageapi.min.js"></script> -->
@@ -128,9 +135,9 @@
 </div>
 
 <div id="game" data-role="page" class="ui-helper-clearfix bodywrapper">
-	<div id="game-header" data-role="header" data-theme="b"> 
+	<div id="game-header" data-role="header" data-theme="b">
 		<a href="#" data-icon="arrow-l" id="game-header-home" class="ui-btn-left" data-iconpos="notext"  data-rel="back">Home</a>
-		<h1 class="gametitle"></h1> 
+		<h1 class="gametitle"></h1>
 		<a href="#options" data-icon="gear" id="game-header-options" class="ui-btn-right options-button" data-rel="dialog">Options</a>
 	</div>
 	<div data-role="content">
@@ -216,7 +223,7 @@
 				</p>
 			</span>
 		</div>
-		
+
 		<div id="gallery0wrapper">
 			<div id="gallery0" class="gallery ui-helper-reset ui-helper-clearfix">
 				<h4 id="header-gallery0" class="ui-widget-header">1</h4>
@@ -227,7 +234,7 @@
 				<span id="button-down-gallery0" class="button-down"><button data-icon="arrow-d" data-iconshadow="false" data-inline="false" data-mini="false" data-iconpos="notext" class="ui-icon-alt">&nbsp;</button></span>
 			</div>
 		</div>
-		
+
 		<div id="gallery1wrapper">
 			<div id="gallery1" class="gallery ui-helper-reset ui-helper-clearfix">
 				<h4 id="header-gallery1" class="ui-widget-header">2</h4>
@@ -240,7 +247,7 @@
 				<span id="button-right-gallery1" class="button-right"><button data-icon="arrow-r" data-iconshadow="false" data-inline="true" data-mini="false" data-iconpos="notext" class="ui-icon-alt">&nbsp;</button></span>
 			</div>
 		</div>
-		
+
 		<div id="gallery2wrapper">
 			<div id="gallery2" class="gallery ui-helper-reset ui-helper-clearfix">
 				<h4 id="header-gallery2" class="ui-widget-header">3</h4>
@@ -251,7 +258,7 @@
 				<span id="button-down-gallery2" class="button-down"><button data-icon="arrow-d" data-iconshadow="false" data-inline="false" data-mini="false" data-iconpos="notext" class="ui-icon-alt">&nbsp;</button></span>
 			</div>
 		</div>
-		
+
 		<div id="gallery3wrapper">
 			<div id="gallery3" class="gallery ui-helper-reset ui-helper-clearfix">
 				<h4 id="header-gallery3" class="ui-widget-header">4</h4>
@@ -276,16 +283,16 @@
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup">
 					<legend>Difficulty:</legend>
-					
+
 					<input type="radio" name="difficulty" id="difficulty-choice1" value="1" disabled="disabled" />
 					<label for="difficulty-choice1">Easy</label>
 
 					<input type="radio" name="difficulty" id="difficulty-choice2" value="2" disabled="disabled" />
 					<label for="difficulty-choice2">Medium</label>
-					
+
 					<input type="radio" name="difficulty" id="difficulty-choice3" value="3" />
 					<label for="difficulty-choice3">Free game</label>
-					
+
 					<input type="radio" name="difficulty" id="difficulty-choice4" value="4" />
 					<label for="difficulty-choice4">Difficult</label>
 					<p>New difficulty level will take effect at the next set.<p>
