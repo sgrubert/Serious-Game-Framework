@@ -5,7 +5,7 @@
   "description": "Frontend for gleaner",
   "dependencies": {
     "q": "1.0.1",
-    "easy-collections": "git@github.com:anserran/easy-collections.git#9e13c0a551360997334342bb13161650bbbc0a77",
+    "easy-collections": "anserran/easy-collections.git#9e13c0a551360997334342bb13161650bbbc0a77",
     "express": "4.8.x",
     "express-session": "1.7.x",
     "body-parser": "1.6.3",
